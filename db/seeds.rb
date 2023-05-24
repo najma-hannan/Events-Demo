@@ -12,14 +12,10 @@
 admin = User.create(username: 'admin', password: 'admin123', email: 'admin@example.com', role: 'admin')
 user1 = User.create(username: 'user1', password: 'user123', email: 'user1@example.com', role: 'normal')
 user2 = User.create(username: 'user2', password: 'user123', email: 'user2@example.com', role: 'normal')
-ada = User.create(username: 'ada', password: 'ada123', email: 'ada@example.com', role: 'normal')
-user1 = User.create(username: 'user1', password: 'user123', email: 'user1@example.com', role: 'normal')
-user2 = User.create(username: 'user2', password: 'user123', email: 'user2@example.com', role: 'normal')
-
 
 # Creating Events
-event1 = Event.create(title: 'Event 1', description: 'Lorem ipsum dolor sit amet', start_date: '2023-06-01', end_date: '2023-06-02', location: 'Location 1', organizer: admin)
-event2 = Event.create(title: 'Event 2', description: 'Consectetur adipiscing elit', start_date: '2023-06-05', end_date: '2023-06-06', location: 'Location 2', organizer: admin)
+event1 = Event.create(title: 'Event 1', description: 'safari trip launch', start_date: '2023-06-01', end_date: '2023-06-02', location: 'Location 1', organizer: admin)
+event2 = Event.create(title: 'Event 2', description: 'sol fest concert', start_date: '2023-06-05', end_date: '2023-06-06', location: 'Location 2', organizer: admin)
 
 # Creating Tickets
 ticket1 = Ticket.create(event: event1, type: 'General', price: 10.0, quantity: 100)
