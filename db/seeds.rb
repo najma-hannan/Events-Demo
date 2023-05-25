@@ -9,9 +9,9 @@
 # You can place this code in a file called seeds.rb and run `rails db:seed` to execute it
 
 # Creating Users
-admin = User.create(username: 'admin', password: 'admin123', email: 'admin@example.com', role: 'admin')
-user1 = User.create(username: 'user1', password: 'user123', email: 'user1@example.com', role: 'normal')
-user2 = User.create(username: 'user2', password: 'user123', email: 'user2@example.com', role: 'normal')
+admin = User.create(name: 'admin', password: 'admin123', email: 'admin@example.com', is_admin: true)
+user1 = User.create(name: 'user1', password: 'user123', email: 'user1@example.com')
+user2 = User.create(name: 'user2', password: 'user123', email: 'user2@example.com')
 
 # Creating Events
 event1 = Event.create(title: 'Event 1', description: 'safari trip launch', start_date: '2023-06-01', end_date: '2023-06-02', location: 'Location 1', organizer: admin)
