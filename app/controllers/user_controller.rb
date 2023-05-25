@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user
   before_action :authorize_admin, except: [:index, :show]
 
   # POST /users
@@ -23,6 +24,13 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     user.destroy
     head :no_content
+  end
+  def manage_users
+    # Code to manage users (e.g., create, update, delete)
+  end
+
+  def manage_vendors
+    # Code to manage vendors (e.g., create, update, delete)
   end
 
   private
