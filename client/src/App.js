@@ -1,22 +1,26 @@
-// import logo from "./logo.svg";
 import "./App.css";
-// import { Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Home from "./pages/Home";
-import About from "./pages/About";
+import HomePage from "./components/HomePage";
+import EventForm from "./components/EventForm";
+import LogIn from "./components/LogIn";
+import SignUp from "./components/SignUp";
 import Cart from "./pages/Cart";
-import NavigationBar from "./components/NavigationBar";
+import Navbar from "./components/NavBar";
+// import NavigationBar from "./components/NavigationBar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <div>
       <Router>
-        <NavigationBar />
+        <Navbar />
+        {/* <NavigationBar /> */}
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/events" element={<EventForm />} />
+          <Route path="/log-in" element={<LogIn />} />
+          <Route path="/sign-up" element={<SignUp />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/about-us" element={<About />} />
         </Routes>
       </Router>
     </div>
