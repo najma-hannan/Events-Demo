@@ -1,41 +1,69 @@
 import React, { useState } from 'react';
 
-const LogIn = () => {
-  const [email, setEmail] = useState('');
+const Login = () => {
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogIn = (e) => {
-    e.preventDefault();
-    // Handle log in logic here
-    console.log('Log in form submitted');
-    console.log('Email:', email);
-    console.log('Password:', password);
+  const handleLogin = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/login',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await response.json();
+      const token = data.token;
+      // Store the token in local storage
+      localStorage.setItem('token', token);
+      // Redirect to protected route or perform other actions
+    } catch (error) {
+      console.error('Login failed', error);
+    }
+  };
+
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch( 'http://localhost:3000/logout', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      if (response.ok) {
+        // Clear the stored token
+        localStorage.removeItem('token');
+        // Redirect to the login page or perform other actions
+      } else {
+        console.error('Logout failed');
+      }
+    } catch (error) {
+      console.error('Logout failed', error);
+    }
   };
 
   return (
     <div>
-      <h2>Log In</h2>
-      <form onSubmit={handleLogIn}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit">Log In</button>
-      </form>
+      <input
+        type="text"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Username"
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+      />
+      <button onClick={handleLogin}>Login</button>
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 };
 
-export default LogIn;
+export default Login;

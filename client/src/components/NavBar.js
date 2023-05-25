@@ -1,40 +1,41 @@
 import React from "react";
 import { BsCart4 } from "react-icons/bs";
 import Badge from "react-bootstrap/Badge";
+import { Link } from "react-router-dom"; // Add this import
 
 const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <a href="/">Event Hub</a>
+        <Link to="/">Event Hub</Link> {/* Use Link component */}
       </div>
       <ul className="navbar-links">
         <li>
-          <a href={"/"}>Home</a>
+          <Link to="/">Home</Link>
         </li>
         <li>
-          <a href="/events">Events</a>
+          <Link to="/events">Events</Link>
         </li>
         <li>
-          <a href="/about">About</a>
+          <Link to="/about">About</Link>
         </li>
         <li>
-          <a href="/contact">Contact</a>
+          <Link to="/contact">Contact</Link>
         </li>
         <li>
-          <a href="/cart">
+          <Link to="/cart">
             <BsCart4 />
             Cart<Badge bg="danger">9</Badge>
-          </a>
+          </Link>
         </li>
       </ul>
       <div className="navbar-buttons">
-        <a href="/signup" className="navbar-button">
+        <Link to="/signup" className="navbar-button"> {/* Use Link component */}
           Sign Up
-        </a>
-        <a href="/login" className="navbar-button">
+        </Link>
+        <Link to="/login" className="navbar-button"> {/* Use Link component */}
           Log In
-        </a>
+        </Link>
       </div>
     </nav>
   );

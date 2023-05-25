@@ -4,12 +4,23 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
-    // Handle sign up logic here
-    console.log('Sign up form submitted');
-    console.log('Email:', email);
-    console.log('Password:', password);
+    try {
+      const response = await fetch('http://localhost:3000/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({user:  {email, password} }),
+        mode: 'no-cors',
+      });
+      const data = await response.json();
+      console.log('Signup successful', data);
+    } catch (error) {
+      console.error('Signup failed', error);
+    }
   };
 
   return (
@@ -21,6 +32,7 @@ const SignUp = () => {
           <input
             type="email"
             value={email}
+            autoComplete='email'
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
@@ -28,10 +40,20 @@ const SignUp = () => {
           <label>Password:</label>
           <input
             type="password"
+            autoComplete='current-password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
+        {/* <div>
+          <label>Password Confirm:</label>
+          <input
+            type="password"
+            autoComplete='current-password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div> */}
         <button type="submit">Sign Up</button>
       </form>
     </div>
