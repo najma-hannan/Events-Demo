@@ -1,23 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import EventCard from './EventCard';
+import axios from 'axios';
 
 const HomePage = () => {
   const [events, setEvents] = useState([]);
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/events');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setEvents(data);
-      } catch (error) {
-        console.error('Fetching events failed: ', error);
-      }
-    };
+  function fetchEvents() {
+    axios.get("/events")
+      .then(res => {
+        setEvents(res.data);
+      }).catch(error => {
+        console.error(error);
+      });
+  }
 
+  useEffect(() => {
     fetchEvents();
   }, []);
 
