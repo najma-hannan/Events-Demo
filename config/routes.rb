@@ -20,3 +20,10 @@ Rails.application.routes.draw do
   resources :events, only: [:index, :show, :create, :update, :destroy]
   post '/login', to: 'authentication#login'
 end
+Rails.application.routes.draw do
+  get 'events/index'
+  get 'events/show'
+  get 'events/create'
+  get 'events/update'
+  get 'events/destroy'
+  resources :tickets, only: [:index,:create, ]
