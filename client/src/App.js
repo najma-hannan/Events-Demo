@@ -3,8 +3,8 @@ import './App.css';
 import  authentication from './authentication'
 import CreateEventForm from './CreateEventForm';
 import   DeleteEventButton from './DeleteEventButton'
-Import EditEventForm  from  './EditEventForm'
-
+import EditEventForm  from  './EditEventForm'
+import EventList from './Eventlist'
 
 function App() {
   return (
