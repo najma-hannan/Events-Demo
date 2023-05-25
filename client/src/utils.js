@@ -5,7 +5,7 @@ export function authenticate(user) {
 export function isAuthenticated() {
     const user = retrieveUser();
 
-    return user !== null || user !== undefined
+    return user !== null;
 }
 
 export function retrieveUser() {
