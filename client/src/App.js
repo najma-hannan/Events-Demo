@@ -20,11 +20,8 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/events" element={<EventForm />} />
-<<<<<<< Updated upstream
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-=======
->>>>>>> Stashed changes
           <Route path="/login" element={<LogIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/cart" element={<Cart />} />
