@@ -16,4 +16,6 @@ user2 = User.create(username: 'user2', password: 'user123', email: 'user2@exampl
 # Creating Events
 event1 = Event.create(title: 'Event 1', description: 'safari trip launch', start_date: '2023-06-01', end_date: '2023-06-02', location: 'Location 1', organizer: admin)
 event2 = Event.create(title: 'Event 2', description: 'sol fest concert', start_date: '2023-06-05', end_date: '2023-06-06', location: 'Location 2', organizer: admin)
+event3 = Event.create(title: 'Event 3', description: 'blankets and wines', start_date: '2023-06-05', end_date: '2023-06-06', location: 'Location 2', organizer: admin)
+
 
