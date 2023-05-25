@@ -1,14 +1,15 @@
-import React from 'react';
+import React from "react";
+import { BsCart4 } from "react-icons/bs";
+import Badge from "react-bootstrap/Badge";
 
 const Navbar = () => {
-
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-      <a href="/">Event Hub</a>
+        <a href="/">Event Hub</a>
       </div>
       <ul className="navbar-links">
-      <li>
+        <li>
           <a href={"/"}>Home</a>
         </li>
         <li>
@@ -19,6 +20,12 @@ const Navbar = () => {
         </li>
         <li>
           <a href="/contact">Contact</a>
+        </li>
+        <li>
+          <a href="/cart">
+            <BsCart4 />
+            Cart<Badge bg="danger">9</Badge>
+          </a>
         </li>
       </ul>
       <div className="navbar-buttons">
