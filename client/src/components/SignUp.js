@@ -1,35 +1,77 @@
 import React, { useState } from 'react';
 
-const SignUp = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+import axios from 'axios';
+import ErrorContainer from './ErrorContainer';
+import { useNavigate } from 'react-router-dom';
+import { authenticate } from '../utils';
 
-  const handleSignUp = (e) => {
+const SignUp = () => {
+  const [errors, setErrors] = useState([]);
+  const navigate = useNavigate();
+
+  const handleSignUp = async (e) => {
     e.preventDefault();
-    // Handle sign up logic here
-    console.log('Sign up form submitted');
-    console.log('Email:', email);
-    console.log('Password:', password);
+
+    const formData = new FormData(e.target);
+    const payload = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await axios.post("/signup", { user: payload });
+      const { user, token } = await response.data;
+
+      authenticate({ ...user, token });
+
+      navigate("/");
+    } catch (error) {
+      if (error.response.status === 422) {
+        setErrors(error.response.data.errors);
+      } else {
+        setErrors([error.message])
+      }
+      console.error(error);
+    }
   };
 
   return (
     <div>
       <h2>Sign Up</h2>
-      <form onSubmit={handleSignUp}>
+      <ErrorContainer className="container mt-1" errors={errors} />
+
+      <form className="mt-1" onSubmit={handleSignUp}>
+        <div>
+          <label>Full Name:</label>
+          <input
+            type="text"
+            name="name"
+            autoComplete='name'
+            required
+          />
+        </div>
         <div>
           <label>Email:</label>
           <input
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            name={"email"}
+            autoComplete='email'
+            required
           />
         </div>
         <div>
           <label>Password:</label>
           <input
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            autoComplete='current-password'
+            name={"password"}
+            required
+          />
+        </div>
+        <div>
+          <label>Password Confirm:</label>
+          <input
+            type="password"
+            autoComplete='current-password'
+            name={"password-confirmation"}
+            required
           />
         </div>
         <button type="submit">Sign Up</button>

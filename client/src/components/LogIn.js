@@ -1,41 +1,63 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import { Button, Form } from 'react-bootstrap';
+import { authenticate } from '../utils';
+import { useNavigate, useRevalidator } from 'react-router-dom';
+import ErrorContainer from './ErrorContainer';
 
-const LogIn = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const Login = () => {
+  const navigate = useNavigate();
+  const revalidator = useRevalidator();
 
-  const handleLogIn = (e) => {
-    e.preventDefault();
-    // Handle log in logic here
-    console.log('Log in form submitted');
-    console.log('Email:', email);
-    console.log('Password:', password);
+  const [errors, setErrors] = useState([]);
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await axios.post("/login", data);
+      const { user, token } = response.data;
+
+      authenticate({ ...user, token });
+
+      revalidator.revalidate();
+
+      navigate("/");
+    } catch (error) {
+      if (error.response.status === 422) {
+        setErrors(error.response.data.errors);
+      } else {
+        setErrors([error.message]);
+      }
+
+      console.error('Login failed', error);
+    }
   };
 
   return (
     <div>
-      <h2>Log In</h2>
-      <form onSubmit={handleLogIn}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit">Log In</button>
-      </form>
+      <h1>Login</h1>
+
+      <ErrorContainer errors={errors} className={"container mt-1"} />
+
+      <Form className="mt-1" onSubmit={handleLogin}>
+        <Form.Group>
+          <Form.Label>Email address</Form.Label>
+          <Form.Control type="email" autoComplete='email' placeholder="Enter email" name="email" required />
+        </Form.Group>
+
+        <Form.Group className="mt-3">
+          <Form.Label>Password</Form.Label>
+          <Form.Control type="password" autoComplete='current-password' placeholder="Enter password" name="password" required />
+        </Form.Group>
+
+        <Button variant='primary' type="submit">Login</Button>
+      </Form>
     </div>
   );
 };
 
-export default LogIn;
+export default Login;

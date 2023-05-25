@@ -7,27 +7,37 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import SignUp from "./components/SignUp";
 import Cart from "./pages/Cart";
-import Navbar from "./components/NavBar";
-// import NavigationBar from "./components/NavigationBar";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
+import { isAuthenticated, retrieveUser } from "./utils";
+import Layout from "./components/Layout";
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route
+      id="root"
+      element={<Layout />}
+      loader={() => {
+        if (isAuthenticated()) {
+          return retrieveUser();
+        }
+
+        return null;
+      }}>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/events" element={<EventForm />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/login" element={<LogIn />} />
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="/cart" element={<Cart />} />
+    </Route>
+  )
+)
 
 function App() {
   return (
-    <div>
-      <Router>
-        <Navbar />
-        {/* <NavigationBar /> */}
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/events" element={<EventForm />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<LogIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/cart" element={<Cart />} />
-        </Routes>
-      </Router>
-    </div>
+    <RouterProvider router={router}>
+    </RouterProvider>
   );
 }
 
