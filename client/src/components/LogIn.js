@@ -1,67 +1,61 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import { Button, Form } from 'react-bootstrap';
+import { authenticate } from '../utils';
+import { useNavigate, useRevalidator } from 'react-router-dom';
+import ErrorContainer from './ErrorContainer';
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const revalidator = useRevalidator();
 
-  const handleLogin = async () => {
+  const [errors, setErrors] = useState([]);
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData.entries());
+
     try {
-      const response = await fetch('http://localhost:3000/login',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
-      const data = await response.json();
-      const token = data.token;
-      // Store the token in local storage
-      localStorage.setItem('token', token);
-      // Redirect to protected route or perform other actions
+      const response = await axios.post("/login", data);
+      const { user, token } = response.data;
+
+      authenticate({ ...user, token });
+
+      revalidator.revalidate();
+
+      navigate("/");
     } catch (error) {
-      console.error('Login failed', error);
-    }
-  };
-
-
-  const handleLogout = async () => {
-    try {
-      const response = await fetch( 'http://localhost:3000/logout', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-      if (response.ok) {
-        // Clear the stored token
-        localStorage.removeItem('token');
-        // Redirect to the login page or perform other actions
+      if (error.response.status === 422) {
+        setErrors(error.response.data.errors);
       } else {
-        console.error('Logout failed');
+        setErrors([error.message]);
       }
-    } catch (error) {
-      console.error('Logout failed', error);
+
+      console.error('Login failed', error);
     }
   };
 
   return (
     <div>
-      <input
-        type="text"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        placeholder="Username"
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-      />
-      <button onClick={handleLogin}>Login</button>
-      <button onClick={handleLogout}>Logout</button>
+      <h1>Login</h1>
+
+      <ErrorContainer errors={errors} className={"container mt-1"} />
+
+      <Form className="mt-1" onSubmit={handleLogin}>
+        <Form.Group>
+          <Form.Label>Email address</Form.Label>
+          <Form.Control type="email" autoComplete='email' placeholder="Enter email" name="email" required />
+        </Form.Group>
+
+        <Form.Group className="mt-3">
+          <Form.Label>Password</Form.Label>
+          <Form.Control type="password" autoComplete='current-password' placeholder="Enter password" name="password" required />
+        </Form.Group>
+
+        <Button variant='primary' type="submit">Login</Button>
+      </Form>
     </div>
   );
 };

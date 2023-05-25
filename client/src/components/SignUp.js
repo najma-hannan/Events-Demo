@@ -16,18 +16,12 @@ const SignUp = () => {
     const payload = Object.fromEntries(formData.entries());
 
     try {
-      const response = await axios.post("http://localhost:3000/signup", { user: payload }, {
-        headers:
-        {
-          Accept: 'application/json',
-          "Content-Type": "application/json"
-        }
-      });
+      const response = await axios.post("/signup", { user: payload });
       const { user, token } = await response.data;
 
       authenticate({ ...user, token });
 
-      navigate("/home");
+      navigate("/");
     } catch (error) {
       if (error.response.status === 422) {
         setErrors(error.response.data.errors);
