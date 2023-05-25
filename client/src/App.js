@@ -1,10 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
-import  authentication from './authentication'
+import  login from './LoginForm';
 import CreateEventForm from './CreateEventForm';
-import   DeleteEventButton from './DeleteEventButton'
-import EditEventForm  from  './EditEventForm'
-import EventList from './Eventlist'
+import   DeleteEventButton from './DeleteEventButton';
+import EditEventForm  from  './EditEventForm';
+import EventList from './Eventlist';
 
 function App() {
   return (

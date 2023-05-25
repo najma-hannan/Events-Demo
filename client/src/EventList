@@ -1,0 +1,27 @@
+import React, { useEffect, useState } from 'react';
+
+const EventList = () => {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/v1/events')
+      .then((response) => response.json())
+      .then((data) => setEvents(data))
+      .catch((error) => console.error(error));
+  }, []);
+
+  return (
+    <div>
+      <h2>Upcoming Events</h2>
+      {events.map((event) => (
+        <div key={event.id}>
+          <h3>{event.title}</h3>
+          <p>{event.description}</p>
+          {/* Render other event details */}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default EventList;
