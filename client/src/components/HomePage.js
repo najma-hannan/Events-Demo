@@ -9,7 +9,7 @@ const HomePage = () => {
       title: 'Music Concert',
       date: 'June 15, 2023',
       location: 'City Stadium',
-      image: 'logo192.png',
+      image: 'logo512.png',
     },
     {
       id: 2,
