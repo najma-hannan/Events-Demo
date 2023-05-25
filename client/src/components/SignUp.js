@@ -1,39 +1,65 @@
 import React, { useState } from 'react';
 
+import axios from 'axios';
+import ErrorContainer from './ErrorContainer';
+import { useNavigate } from 'react-router-dom';
+import { authenticate } from '../utils';
+
 const SignUp = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState([]);
+  const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const payload = Object.fromEntries(formData.entries());
+
     try {
-      const response = await fetch('http://localhost:3000/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await axios.post("http://localhost:3000/signup", { user: payload }, {
+        headers:
+        {
           Accept: 'application/json',
-        },
-        body: JSON.stringify({user:  {email, password} }),
-        mode: 'no-cors',
+          "Content-Type": "application/json"
+        }
       });
-      const data = await response.json();
-      console.log('Signup successful', data);
+      const { user, token } = await response.data;
+
+      authenticate({ ...user, token });
+
+      navigate("/home");
     } catch (error) {
-      console.error('Signup failed', error);
+      if (error.response.status === 422) {
+        setErrors(error.response.data.errors);
+      } else {
+        setErrors([error.message])
+      }
+      console.error(error);
     }
   };
 
   return (
     <div>
       <h2>Sign Up</h2>
-      <form onSubmit={handleSignUp}>
+      <ErrorContainer className="container mt-1" errors={errors} />
+
+      <form className="mt-1" onSubmit={handleSignUp}>
+        <div>
+          <label>Full Name:</label>
+          <input
+            type="text"
+            name="name"
+            autoComplete='name'
+            required
+          />
+        </div>
         <div>
           <label>Email:</label>
           <input
             type="email"
-            value={email}
+            name={"email"}
             autoComplete='email'
-            onChange={(e) => setEmail(e.target.value)}
+            required
           />
         </div>
         <div>
@@ -41,19 +67,19 @@ const SignUp = () => {
           <input
             type="password"
             autoComplete='current-password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name={"password"}
+            required
           />
         </div>
-        {/* <div>
+        <div>
           <label>Password Confirm:</label>
           <input
             type="password"
             autoComplete='current-password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name={"password-confirmation"}
+            required
           />
-        </div> */}
+        </div>
         <button type="submit">Sign Up</button>
       </form>
     </div>
