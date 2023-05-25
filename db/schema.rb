@@ -18,21 +18,13 @@ ActiveRecord::Schema.define(version: 2023_05_24_150252) do
   create_table "events", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.date "date"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.string "location"
-    t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_events_on_user_id"
-  end
-
-  create_table "tickets", force: :cascade do |t|
-    t.bigint "event_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["event_id"], name: "index_tickets_on_event_id"
-    t.index ["user_id"], name: "index_tickets_on_user_id"
+    t.bigint "organizer_id"
+    t.index ["organizer_id"], name: "index_events_on_organizer_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -41,6 +33,8 @@ ActiveRecord::Schema.define(version: 2023_05_24_150252) do
     t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "username"
+    t.string "role"
   end
 
   add_foreign_key "events", "users"

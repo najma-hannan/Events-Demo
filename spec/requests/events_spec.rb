@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Events", type: :request do
   describe "GET /index" do
+<<<<<<< HEAD
     it "returns http success" do
       get "/events/index"
       expect(response).to have_http_status(:success)
@@ -36,4 +37,8 @@ RSpec.describe "Events", type: :request do
     end
   end
 
+=======
+    pending "add some examples (or delete) #{__FILE__}"
+  end
+>>>>>>> e9a31bf9e6848f91873b07a4cb543dce1328888d
 end
