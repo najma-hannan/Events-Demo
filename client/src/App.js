@@ -10,7 +10,7 @@ import Cart from "./pages/Cart";
 import Navbar from "./components/NavBar";
 import Tickets from "./pages/Tickets";
 // import NavigationBar from "./components/NavigationBar";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import {
   Route,
   createBrowserRouter,
@@ -45,7 +45,11 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  return <RouterProvider router={router}></RouterProvider>;
+  return (
+    <RouterProvider router={router}>
+      <Navbar />
+    </RouterProvider>
+  );
 }
 
 export default App;

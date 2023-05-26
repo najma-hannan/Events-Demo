@@ -1,8 +1,11 @@
 import React from "react";
 import { BsCart4 } from "react-icons/bs";
 import Badge from "react-bootstrap/Badge";
+import { Link, useNavigate, useRouteLoaderData } from "react-router-dom"; // Add this import
+import { isAuthenticated, logout } from "../utils";
+import { Button } from "react-bootstrap";
 
-const Navbar = ({ cartCount }) => {
+const Navbar = () => {
   const navigate = useNavigate();
   const user = useRouteLoaderData("root");
 
@@ -31,23 +34,33 @@ const Navbar = ({ cartCount }) => {
           <Link to="/contact">Contact</Link>
         </li>
         <li>
-          <a href="/tickets">Tickets</a>
-        </li>
-        <li>
           <Link to="/cart">
             <BsCart4 />
-            Cart<Badge bg="danger">{cartCount}</Badge>
+            Cart<Badge bg="danger">9</Badge>
           </Link>
         </li>
       </ul>
-      <div className="navbar-buttons">
-        <a href="/signup" className="navbar-button">
-          Sign Up
-        </a>
-        <a href="/login" className="navbar-button">
-          Log In
-        </a>
-      </div>
+      {isAuthenticated() ? (
+        <div className="navbar-buttons">
+          <span>{user?.email} </span>
+          <Button variant="secondary" onClick={logoutAction}>
+            Logout
+          </Button>
+        </div>
+      ) : (
+        <div className="navbar-buttons">
+          <Link to="/signup" className="navbar-button">
+            {" "}
+            {/* Use Link component */}
+            Sign Up
+          </Link>
+          <Link to="/login" className="navbar-button">
+            {" "}
+            {/* Use Link component */}
+            Log In
+          </Link>
+        </div>
+      )}
     </nav>
   );
 };
