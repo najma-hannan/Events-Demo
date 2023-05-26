@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_24_113428) do
+ActiveRecord::Schema.define(version: 2023_05_25_212550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,12 +18,12 @@ ActiveRecord::Schema.define(version: 2023_05_24_113428) do
   create_table "events", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.datetime "start_date"
-    t.datetime "end_date"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.date "start_date"
+    t.date "end_date"
     t.string "location"
     t.bigint "organizer_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["organizer_id"], name: "index_events_on_organizer_id"
   end
 
@@ -31,10 +31,10 @@ ActiveRecord::Schema.define(version: 2023_05_24_113428) do
     t.string "name"
     t.string "email"
     t.string "password_digest"
+    t.boolean "is_admin", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "username"
-    t.string "role"
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
   add_foreign_key "events", "users", column: "organizer_id"

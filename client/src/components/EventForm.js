@@ -5,21 +5,36 @@ const EventForm = () => {
   const [date, setDate] = useState('');
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
+  const [rating, setUpdateRating] = useState('')
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+const handleSubmit = async (event) => {
+  event.preventDefault();
 
-   
-    console.log({ title, date, location, description });
+    try {
+      const response = await fetch('http://localhost:3000/events', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ title, date, location, description, rating}),
+      });
+const data = await response.json();
+    console.log(data);
+
+  } catch (error) {
+    console.error('Event creation failed', error);
+  }
 
     // Reset the form fields
     setTitle('');
     setDate('');
     setLocation('');
     setDescription('');
-  };
+    setUpdateRating('');
 
-  return (
+};
+
+return (
     <form onSubmit={handleSubmit}>
       <div>
         <label htmlFor="title">Title:</label>
@@ -63,6 +78,18 @@ const EventForm = () => {
           required
         />
       </div>
+
+      <div>
+        <label htmlFor="rating">Rating: </label>
+        <input
+          type="number"
+          id="rating"
+          max="5"
+          value={rating}
+          onChange={(e) => setUpdateRating(e.target.value)}
+        />
+      </div>
+      
 
       {/* <div>
         <label htmlFor="price">Price:</label>
