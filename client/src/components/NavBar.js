@@ -2,7 +2,7 @@ import React from "react";
 import { BsCart4 } from "react-icons/bs";
 import Badge from "react-bootstrap/Badge";
 
-const Navbar = () => {
+const Navbar = ({ cartCount }) => {
   return (
     <nav className="navbar">
       <div className="navbar-logo">
@@ -22,9 +22,12 @@ const Navbar = () => {
           <a href="/contact">Contact</a>
         </li>
         <li>
+          <a href="/tickets">Tickets</a>
+        </li>
+        <li>
           <a href="/cart">
             <BsCart4 />
-            Cart<Badge bg="danger">9</Badge>
+            Cart<Badge bg="danger">{cartCount}</Badge>
           </a>
         </li>
       </ul>

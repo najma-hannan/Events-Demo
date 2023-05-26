@@ -6,6 +6,7 @@ import LogIn from "./components/LogIn";
 import SignUp from "./components/SignUp";
 import Cart from "./pages/Cart";
 import Navbar from "./components/NavBar";
+import Tickets from "./pages/Tickets";
 // import NavigationBar from "./components/NavigationBar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/log-in" element={<LogIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/tickets" element={<Tickets />} />
         </Routes>
       </Router>
     </div>
