@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :events, only: [:index, :show, :create] do
     resources :tickets, only: [:index, :create]
   end
-  resources :tickets, only: [:edit, :destroy]
+  resources :tickets, only: [:update, :destroy]
 
   post '/login', to: 'sessions#create'
   post '/signup', to: 'registrations#create'
