@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import EventCard from "./EventCard";
 import axios from "axios";
+import CardContainer from "./CardContainer";
 
 const HomePage = () => {
   const [events, setEvents] = useState([]);
@@ -29,6 +30,7 @@ const HomePage = () => {
           <EventCard key={event.id} event={event} />
         ))}
       </div>
+      <CardContainer />
     </div>
   );
 };

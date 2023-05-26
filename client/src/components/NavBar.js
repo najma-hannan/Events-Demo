@@ -5,7 +5,7 @@ import { Link, useNavigate, useRouteLoaderData } from "react-router-dom"; // Add
 import { isAuthenticated, logout } from "../utils";
 import { Button } from "react-bootstrap";
 
-const Navbar = () => {
+export default function Navbar({ cartCount }) {
   const navigate = useNavigate();
   const user = useRouteLoaderData("root");
 
@@ -36,7 +36,7 @@ const Navbar = () => {
         <li>
           <Link to="/cart">
             <BsCart4 />
-            Cart<Badge bg="danger">9</Badge>
+            Cart<Badge bg="danger">{cartCount}</Badge>
           </Link>
         </li>
       </ul>
@@ -63,6 +63,4 @@ const Navbar = () => {
       )}
     </nav>
   );
-};
-
-export default Navbar;
+}

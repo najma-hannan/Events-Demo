@@ -7,15 +7,13 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import SignUp from "./components/SignUp";
 import Cart from "./pages/Cart";
-import Navbar from "./components/NavBar";
-import Tickets from "./pages/Tickets";
-// import NavigationBar from "./components/NavigationBar";
 
 import {
   Route,
   createBrowserRouter,
   createRoutesFromElements,
   RouterProvider,
+  Outlet,
 } from "react-router-dom";
 import { isAuthenticated, retrieveUser } from "./utils";
 import Layout from "./components/Layout";
@@ -47,7 +45,7 @@ const router = createBrowserRouter(
 function App() {
   return (
     <RouterProvider router={router}>
-      <Navbar />
+      <Outlet />
     </RouterProvider>
   );
 }
