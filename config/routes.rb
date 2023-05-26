@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :events, only: [:index, :show, :create] do
     resources :tickets, only: [:index, :create, :update, :destroy]
     post '/orders', to: 'events#order_tickets'
+    patch '/title', to: 'events#update_title'
   end
 
   post '/login', to: 'sessions#create'

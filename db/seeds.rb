@@ -13,9 +13,25 @@ admin = User.create(name: 'admin', password: 'admin123', email: 'admin@example.c
 user1 = User.create(name: 'user1', password: 'user123', email: 'user1@example.com')
 user2 = User.create(name: 'user2', password: 'user123', email: 'user2@example.com')
 
+# Delete existing events
+Event.delete_all
+
 # Creating Events
-event1 = Event.create(title: 'Event 1', description: 'safari trip launch', start_date: '2023-06-01', end_date: '2023-06-02', location: 'Location 1', organizer: admin)
-event2 = Event.create(title: 'Event 2', description: 'sol fest concert', start_date: '2023-06-05', end_date: '2023-06-06', location: 'Location 2', organizer: admin)
-event3 = Event.create(title: 'Event 3', description: 'blankets and wines', start_date: '2023-06-05', end_date: '2023-06-06', location: 'Location 2', organizer: admin)
+event_attributes = [
+  { title: 'Safari', description: 'safari trip launch', start_date: '2023-06-01', end_date: '2023-06-02', location: 'Nairobi', organizer: admin },
+  { title: 'Sol Fest', description: 'sol fest concert', start_date: '2023-06-05', end_date: '2023-06-06', location: 'Kisumu', organizer: admin },
+  { title: 'Blankets and wines', description: 'blankets and wine', start_date: '2023-06-05', end_date: '2023-06-06', location: 'Mombasa', organizer: admin },
+  { title: 'National Museums', description: 'art show', start_date: '2023-06-01', end_date: '2023-06-02', location: 'Nakuru', organizer: admin },
+  { title: 'Tea Farms Tour', description: 'outdoors', start_date: '2023-06-01', end_date: '2023-06-02', location: 'Nairobi', organizer: admin },
+  { title: 'Food Fest', description: 'food fest', start_date: '2023-06-05', end_date: '2023-06-06', location: 'Kisumu', organizer: admin },
+  { title: 'White Party', description: 'all white party', start_date: '2023-06-05', end_date: '2023-06-06', location: 'Mombasa', organizer: admin },
+  { title: 'Music Competition', description: 'Music', start_date: '2023-06-01', end_date: '2023-06-02', location: 'Nakuru', organizer: admin },
+  { title: 'Black Party', description: 'all black party', start_date: '2023-06-05', end_date: '2023-06-06', location: 'Mombasa', organizer: admin },
+  { title: 'Trivia Night', description: 'Music', start_date: '2023-06-01', end_date: '2023-06-02', location: 'Nakuru', organizer: admin }
+]
 
-
+event_attributes.each do |attributes|
+  Event.find_or_create_by(attributes.slice(:title)) do |event|
+    event.assign_attributes(attributes)
+  end
+end

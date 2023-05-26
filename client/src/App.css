@@ -113,7 +113,7 @@ p {
 }
 
 .event-card {
-  background-color: #88c0c7;
+  background-color: #a19cb3;
   padding: 20px;
   border-radius: 4px;
 
@@ -126,7 +126,7 @@ p {
 }
 
 .event-card img {
-  width: 10%;
+  width: 100%;
   height: auto;
   border-radius: 8px;
   margin-bottom: 10px;
@@ -142,17 +142,17 @@ p {
 }
 
 .event-card button {
-  background-color: #007bff;
+  background-color: #3f6894;
   color: #fff;
   border: none;
   padding: 10px 15px;
-  font-size: 16px;
+  font-size: 18px;
   border-radius: 4px;
   cursor: pointer;
 }
 
 .event-card button:hover {
-  background-color: #405c7a;
+  background-color: #db5e5e;
 }
 .btn-card {
    text-align: center;
@@ -163,7 +163,7 @@ p {
 /* Navbar.css */
 
 .navbar {
-  background-color: #363b3d;
+  background-color: #65696b;
   color: #fff;
   display: flex;
   justify-content: space-between;
@@ -172,7 +172,7 @@ p {
 }
 
 .navbar-logo a {
-  font-size: 24px;
+  font-size: 30px;
   font-weight: bold;
   color: #fff;
   text-decoration: none;
@@ -180,13 +180,14 @@ p {
 
 .navbar-links {
   list-style: none;
+  font-weight: bold;
   margin: 0;
   padding: 0;
   display: flex;
 }
 
 .navbar-links li {
-  margin-left: 20px;
+  margin-left: 30px;
 }
 
 .navbar-links li a {

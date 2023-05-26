@@ -8,7 +8,8 @@ class EventsController < ApplicationController
     end
 
     def show
-      render json: @event
+      event = Event.find(params[:id])
+      render json: event
     end
 
     def create
@@ -20,11 +21,13 @@ class EventsController < ApplicationController
       end
     end
 
-    def update
-      if @event.update(event_params)
-        render json: @event
+    def update_title
+      event = Event.find(params[:id])
+      event.title = params[:title]
+      if event.save
+        render json: event
       else
-        render json: @event.errors, status: :unprocessable_entity
+        render json: { errors: event.errors.full_messages }, status: :unprocessable_entity
       end
     end
 
