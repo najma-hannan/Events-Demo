@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import StarRating from './StarRating';
 
-
 const EventCard = ({ event }) => {
   const { title, date, location, image, rating} = event;
 

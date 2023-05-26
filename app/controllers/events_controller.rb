@@ -4,7 +4,7 @@ class EventsController < ApplicationController
 
     def index
       events = Event.all
-      render json: events
+      render json: events, each_serializer: EventSerializer
     end
 
     def show
@@ -42,4 +42,4 @@ class EventsController < ApplicationController
     def event_params
       params.require(:event).permit(:title, :description, :start_date, :end_date, :location)
     end
-  end
+end
