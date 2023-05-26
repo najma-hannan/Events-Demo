@@ -6,20 +6,32 @@ const EventForm = () => {
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+const handleSubmit = async (event) => {
+  event.preventDefault();
 
-   
-    console.log({ title, date, location, description });
+    try {
+      const response = await fetch('http://localhost:3000/events', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ title, date, location, description }),
+      });
+const data = await response.json();
+    console.log(data);
+
+  } catch (error) {
+    console.error('Event creation failed', error);
+  }
 
     // Reset the form fields
     setTitle('');
     setDate('');
     setLocation('');
     setDescription('');
-  };
+};
 
-  return (
+return (
     <form onSubmit={handleSubmit}>
       <div>
         <label htmlFor="title">Title:</label>

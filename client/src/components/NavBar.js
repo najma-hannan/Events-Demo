@@ -3,32 +3,41 @@ import { BsCart4 } from "react-icons/bs";
 import Badge from "react-bootstrap/Badge";
 
 const Navbar = ({ cartCount }) => {
+  const navigate = useNavigate();
+  const user = useRouteLoaderData("root");
+
+  function logoutAction() {
+    logout();
+
+    navigate("/");
+  }
+
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <a href="/">Event Hub</a>
+        <Link to="/">Event Hub</Link> {/* Use Link component */}
       </div>
       <ul className="navbar-links">
         <li>
-          <a href={"/"}>Home</a>
+          <Link to="/">Home</Link>
         </li>
         <li>
-          <a href="/events">Events</a>
+          <Link to="/events">Events</Link>
         </li>
         <li>
-          <a href="/about">About</a>
+          <Link to="/about">About</Link>
         </li>
         <li>
-          <a href="/contact">Contact</a>
+          <Link to="/contact">Contact</Link>
         </li>
         <li>
           <a href="/tickets">Tickets</a>
         </li>
         <li>
-          <a href="/cart">
+          <Link to="/cart">
             <BsCart4 />
             Cart<Badge bg="danger">{cartCount}</Badge>
-          </a>
+          </Link>
         </li>
       </ul>
       <div className="navbar-buttons">
