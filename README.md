@@ -1,5 +1,5 @@
 # Events Hub
-
+group 2
 ## Description
 
 Events Hub is a user-friendly web application that simplifies event management. It provides a centralized platform for planning, organizing, and managing various events. With a powerful backend built on Ruby on Rails and a dynamic frontend powered by React.js, Events Hub offers a seamless and intuitive solution.
