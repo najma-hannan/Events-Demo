@@ -14,14 +14,14 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #485879;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: rgb(250, 224, 224);
 }
 
 .App-link {
@@ -55,7 +55,7 @@ input,
 textarea {
   width: 100%;
   padding: 0.5rem;
-  font-size: 1rem;
+  font-size: 3rem;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
@@ -66,7 +66,7 @@ button {
   font-size: 1rem;
   font-weight: bold;
   color: #fff;
-  background-color: #007bff;
+  background-color: #67b14a;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -113,10 +113,10 @@ p {
 }
 
 .event-card {
-  background-color: #f7f7f7;
+  background-color: #88c0c7;
   padding: 20px;
   border-radius: 4px;
-  
+
 }
 
 .event-details{
@@ -152,7 +152,7 @@ p {
 }
 
 .event-card button:hover {
-  background-color: #0062cc;
+  background-color: #405c7a;
 }
 .btn-card {
    text-align: center;
@@ -163,7 +163,7 @@ p {
 /* Navbar.css */
 
 .navbar {
-  background-color: #333;
+  background-color: #363b3d;
   color: #fff;
   display: flex;
   justify-content: space-between;
@@ -190,13 +190,13 @@ p {
 }
 
 .navbar-links li a {
-  color: #fff;
+  color: #d4c1c1;
   text-decoration: none;
 }
 
 .menu-toggle {
   display: none;
-  color: #fff;
+  color: #b66b6b;
   font-size: 24px;
   cursor: pointer;
 }
