@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   resources :users, only: [:create, :show, :update, :destroy]
-  resources :events, only: [:index]
+  resources :events, only: [:index, :show, :create] do
+    resources :tickets, only: [:index, :create]
+  end
+  resources :tickets, only: [:edit, :destroy]
 
   post '/login', to: 'sessions#create'
   post '/signup', to: 'registrations#create'
