@@ -33,11 +33,15 @@ const SingleEventPage = () => {
   const handleOrderSubmit = async () => {
     try {
       const payload = {
-        user_id: 1, // Replace with the actual user ID
+        user_id: 1,
         tickets: selectedTickets,
       };
-      const response = await axios.post('/api/events/:id/orders', payload); // Replace with your API endpoint to submit the order
-      console.log(response.data); // Handle the response as per your requirements
+      const authToken = localStorage.getItem('authToken');
+      const headers = {
+        Authorization: `Bearer ${authToken}`,
+      };
+      const response = await axios.post('/api/events/:id/orders', payload, { headers });
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     }

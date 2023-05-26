@@ -36,7 +36,27 @@ class EventsController < ApplicationController
       head :no_content
     end
 
+    def order_tickets
+      event = Event.find(params[:id])
+      user_id = order_params[:user_id]
+      tickets = order_params[:tickets]
+
+      order = Order.create(event: event, user_id: user_id)
+
+      tickets.each do |ticket_params|
+        ticket_id = ticket_params[:ticket_id]
+        quantity = ticket_params[:quantity]
+        ticket = Ticket.find(ticket_id)
+        order.order_items.create(ticket: ticket, quantity: quantity)
+      end
+
+      render json: order, status: :created
+    end
+
     private
+    def order_params
+      params.require(:order).permit(:user_id, tickets: [:ticket_id, :quantity])
+    end
 
     def set_event
       @event = Event.find(params[:id])
