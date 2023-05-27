@@ -1,5 +1,13 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import {
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+} from "react-router-dom";
+import { isAuthenticated, retrieveUser } from "./utils";
+import Layout from "./components/Layout";
 import HomePage from "./components/HomePage";
 import EventForm from "./components/EventForm";
 import LogIn from "./components/LogIn";
@@ -42,11 +50,12 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  return (
-    <RouterProvider router={router}>
-      <Outlet />
-    </RouterProvider>
-  );
+  // return (
+  //   <RouterProvider router={router}>
+  //     <Outlet />
+  //   </RouterProvider>
+  // );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
