@@ -44,3 +44,11 @@ code {
 .CardGroup {
   justify-content: center;
 }
+
+.title {
+  font-size: 20px;
+}
+.tickets {
+  width: 30%;
+  margin: 10px;
+}

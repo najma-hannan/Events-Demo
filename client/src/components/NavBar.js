@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BsCart4 } from "react-icons/bs";
 import Badge from "react-bootstrap/Badge";
 import { Link, useNavigate, useRouteLoaderData } from "react-router-dom"; // Add this import
 import { isAuthenticated, logout } from "../utils";
 import { Button } from "react-bootstrap";
+import { CartContext } from "../context/CartContext";
 
-export default function Navbar({ cartCount }) {
+export default function Navbar() {
   const navigate = useNavigate();
   const user = useRouteLoaderData("root");
-
+  const { cartCount } = useContext(CartContext);
   function logoutAction() {
     logout();
 

@@ -1,15 +1,13 @@
 import React from "react";
 import { CardItem } from "./CardItem";
 
-export const CardItems = ({ eventList, handleClickAddToCart }) => {
+export const CardItems = ({ eventList }) => {
+  if (!eventList || eventList.length === 0) {
+    return <div>No event items available.</div>;
+  }
+
   const showEventItems = eventList.map((eventItem) => {
-    return (
-      <CardItem
-        key={eventItem.id}
-        eventItem={eventItem}
-        handleClickAddToCart={handleClickAddToCart}
-      />
-    );
+    return <CardItem key={eventItem.id} eventItem={eventItem} />;
   });
   return (
     <div>

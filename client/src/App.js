@@ -6,8 +6,7 @@ import LogIn from "./components/LogIn";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import SignUp from "./components/SignUp";
-import Cart from "./pages/Cart";
-
+import Cart from "./components/Cart";
 import {
   Route,
   createBrowserRouter,

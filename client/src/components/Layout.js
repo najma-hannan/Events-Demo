@@ -5,7 +5,7 @@ export default function Layout() {
   return (
     <div>
       <header>
-        <Navbar cartCount={cartCount} />
+        <Navbar />
         <main>
           <Outlet />
         </main>
