@@ -12,9 +12,13 @@ class TicketsController < ApplicationController
   end
 
   def index
+    @event = Event.find_by_id!(params[:event_id])
     @tickets = @event.tickets
 
-    render json: @tickets
+    render json: {
+      event: EventSerializer.new(@event),
+      tickets: ActiveModelSerializers::SerializableResource.new(@tickets, each_serializer: TicketSerializer)
+    }
   end
 
   def update

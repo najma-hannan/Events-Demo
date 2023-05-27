@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
 import StarRating from './StarRating';
 
-
 const EventCard = ({ event }) => {
-  const { title, date, location, image, rating} = event;
+  const { title, date, location,image, rating} = event;
 
   const [updatedRating, setUpdatedRating] = useState(rating);
 
@@ -28,7 +27,7 @@ const EventCard = ({ event }) => {
         <h2>{title}</h2>
         <p>Date: {date}</p>
         <p>Location: {location}</p>
-        <button className="btn-card">Book Now</button>
+        <button className="btn-card">Get Ticket</button>
         <div>
            Rating:{" "}
          <StarRating percentage={updatedRating / 5} onClick={handleUpdateRating} />
