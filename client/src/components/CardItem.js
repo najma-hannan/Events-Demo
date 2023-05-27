@@ -17,12 +17,14 @@ export const CardItem = ({ eventItem }) => {
           alt={`${eventItem.name} event`}
         />
         <Card.Body>
-          <Card.Title>{eventItem.name}</Card.Title>
+          <Card.Title>{eventItem.title}</Card.Title>
           <Card.Subtitle style={{ paddingBottom: 10 }}>
             <span>{eventItem.date}</span>
             <span>{eventItem.location}</span>
-            <Badge bg="secondary">Ksh {eventItem.price}</Badge>
-            <StarRating rating={eventItem.ratings} />
+            <span>{eventItem.description}</span>
+            <span>{eventItem.location}</span>
+            {/* <Badge bg="secondary">Ksh {eventItem.price}</Badge> */}
+            <StarRating rating={eventItem.rating} />
           </Card.Subtitle>
           <Button variant="primary" onClick={() => addToCart(eventItem)}>
             Add To Cart

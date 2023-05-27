@@ -1,5 +1,4 @@
 import React, { createContext, useState, useEffect, useReducer } from "react";
-import Cart from "../components/Cart";
 import { cartReducer } from "./cartReducer";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
@@ -10,14 +9,15 @@ export const CartProvider = ({ children }) => {
     cart: [],
   };
   const [cartState, cartDispatch] = useReducer(cartReducer, initialState);
+  const [eventList, setEventList] = useState([]);
+
   // const [eventList, setEventList] = useLocalStorage("eventList", []);
-  const [eventList, setEventList] = useLocalStorage("eventList", []);
+  // const [eventList, setEventList] = useLocalStorage("eventList", []);
   const [selectedEvents, setSelectedEvents] = useLocalStorage(
     // Use the useLocalStorage hook
     "selectedEvents", // Provide the key for localStorage
     []
   );
-  // const [eventList, setEventList] = useState([]);
 
   // useEffect(() => {
   //   fetch("https://63cbc73dea85515415153ca7.mockapi.io/campaignData/refferals")
@@ -26,31 +26,19 @@ export const CartProvider = ({ children }) => {
   //       setEventList(data);
   //     });
   // }, []);
-  // useEffect(() => {
-  //   const fetchEvents = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         "https://63cbc73dea85515415153ca7.mockapi.io/campaignData/refferals"
-  //       );
-  //       const data = await response.json();
-  //       setEventList(data);
-  //     } catch (error) {
-  //       console.error("Failed to fetch events:", error);
-  //     }
-  //   };
-
-  //   fetchEvents();
-  // }, []);
-
   useEffect(() => {
-    // Mock event data
-    const mockEventData = [
-      { id: 1, name: "Event 1", price: 10 },
-      { id: 2, name: "Event 2", price: 20 },
-      { id: 3, name: "Event 3", price: 30 },
-    ];
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/events");
+        const data = await response.json();
+        setEventList(data);
+        console.log("Fetched events:", data);
+      } catch (error) {
+        console.error("Failed to fetch events:", error);
+      }
+    };
 
-    setEventList(mockEventData);
+    fetchEvents();
   }, []);
 
   const addToCart = (eventItem) => {
@@ -75,6 +63,7 @@ export const CartProvider = ({ children }) => {
     <>
       <CartContext.Provider
         value={{
+          eventList,
           cartState,
           cartDispatch,
           selectedEvents,

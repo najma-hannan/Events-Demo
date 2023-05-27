@@ -1,20 +1,14 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {
-  Route,
-  createBrowserRouter,
-  createRoutesFromElements,
-  RouterProvider,
-} from "react-router-dom";
-import { isAuthenticated, retrieveUser } from "./utils";
-import Layout from "./components/Layout";
 import HomePage from "./components/HomePage";
-import EventForm from "./components/EventForm";
+// import EventForm from "./components/EventForm";
+import { EventsPage } from "./components/EventsPage";
 import LogIn from "./components/LogIn";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import SignUp from "./components/SignUp";
 import Cart from "./components/Cart";
+
 import {
   Route,
   createBrowserRouter,
@@ -39,7 +33,7 @@ const router = createBrowserRouter(
       }}
     >
       <Route path="/" element={<HomePage />} />
-      <Route path="/events" element={<EventForm />} />
+      <Route path="/events" element={<EventsPage />} />
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/login" element={<LogIn />} />
@@ -50,12 +44,12 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  // return (
-  //   <RouterProvider router={router}>
-  //     <Outlet />
-  //   </RouterProvider>
-  // );
-  return <RouterProvider router={router} />;
+  return (
+    <RouterProvider router={router}>
+      <Outlet />
+    </RouterProvider>
+  );
+  // return <RouterProvider router={router} />;
 }
 
 export default App;

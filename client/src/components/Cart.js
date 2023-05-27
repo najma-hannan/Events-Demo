@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-import { CardItem } from "./CardItem";
 import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
@@ -11,7 +10,7 @@ import { CartContext } from "../context/CartContext";
 import StarRating from "./StarRating";
 
 export default function Cart({ eventList }) {
-  const { cartState, cartDispatch } = useContext(CartContext);
+  const { cartState, cartDispatch, selectedEvents } = useContext(CartContext);
   const { cart } = cartState;
 
   const [total, setTotal] = useState(0);

@@ -13,7 +13,7 @@ admin = User.create(name: 'admin', password: 'admin123', email: 'admin@example.c
 user1 = User.create(name: 'user1', password: 'user123', email: 'user1@example.com')
 user2 = User.create(name: 'user2', password: 'user123', email: 'user2@example.com')
 
-# Delete existing events
+Delete existing events
 Event.delete_all
 
 # Creating Events
