@@ -12,9 +12,18 @@ const SingleEventPage = () => {
 
   const fetchEvent = async () => {
     try {
-      const response = await axios.get('/api/events/:id'); // Replace with your API endpoint to fetch event details
-      setEvent(response.data.event);
-      setTickets(response.data.tickets);
+      const eventId = 1; // Replace with the actual event ID
+      const eventResponse = await axios.get(`/api/events/${eventId}`);
+      const ticketResponse = await axios.get(`/api/events/${eventId}/tickets`);
+      const orderResponse = await axios.get(`/api/events/${eventId}/orders`);
+
+      const eventData = eventResponse.data.event;
+      const ticketData = ticketResponse.data.tickets;
+      const orderData = orderResponse.data.orders;
+
+      setEvent(eventData);
+      setTickets(ticketData);
+      // Process orderData as needed
     } catch (error) {
       console.log(error);
     }
@@ -33,14 +42,9 @@ const SingleEventPage = () => {
   const handleOrderSubmit = async () => {
     try {
       const payload = {
-        user_id: 1,
         tickets: selectedTickets,
       };
-      const authToken = localStorage.getItem('authToken');
-      const headers = {
-        Authorization: `Bearer ${authToken}`,
-      };
-      const response = await axios.post('/api/events/:id/orders', payload, { headers });
+      const response = await axios.post('/api/events/:id/orders', payload);
       console.log(response.data);
     } catch (error) {
       console.log(error);

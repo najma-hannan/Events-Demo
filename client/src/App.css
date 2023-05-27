@@ -83,6 +83,30 @@ button:hover {
 button[type='submit']:hover {
   background-color: #218838;
 }
+
+/* HomePage component styles */
+
+.home-page {
+  text-align: center;
+  background-color: #f6f6f6;
+  padding: 20px;
+}
+
+.image-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
 /* EventCard.css */
 
 body {
@@ -113,10 +137,15 @@ p {
 }
 
 .event-card {
-  background-color: #a19cb3;
+  background-color: #ffffff;
   padding: 20px;
   border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
 
+.event-card:hover {
+  transform: translateY(-5px);
 }
 
 .event-details{
@@ -152,8 +181,9 @@ p {
 }
 
 .event-card button:hover {
-  background-color: #db5e5e;
+  background-color: #55b966;
 }
+
 .btn-card {
    text-align: center;
    display: flex;
@@ -163,8 +193,8 @@ p {
 /* Navbar.css */
 
 .navbar {
-  background-color: #65696b;
-  color: #fff;
+  background-color: #485879;
+  color: #ffffff;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -174,7 +204,7 @@ p {
 .navbar-logo a {
   font-size: 30px;
   font-weight: bold;
-  color: #fff;
+  color: #ffffff;
   text-decoration: none;
 }
 
@@ -193,6 +223,11 @@ p {
 .navbar-links li a {
   color: #d4c1c1;
   text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.navbar-links li a:hover {
+  color: #ebe5e5;
 }
 
 .menu-toggle {
@@ -259,6 +294,7 @@ p {
   background-color: #474e5d;
   color: white;
 }
+
 li{
   text-decoration: none;
   list-style: none;

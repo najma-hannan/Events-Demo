@@ -4,7 +4,6 @@ import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } 
 import { isAuthenticated, retrieveUser } from "./utils";
 import Layout from "./components/Layout";
 import HomePage from "./components/HomePage";
-import EventPage from "./components/EventPage";
 import EventForm from "./components/EventForm";
 import LogIn from "./components/LogIn";
 import About from "./components/About";
@@ -27,7 +26,6 @@ const router = createBrowserRouter(
     >
       <Route path="/" element={<HomePage />} />
       <Route path="/events" element={<EventForm />} />
-      <Route path="/eventspage" element={<EventPage />} />
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/login" element={<LogIn />} />
