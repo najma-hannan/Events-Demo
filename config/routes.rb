@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
   resources :users, only: [:create, :show, :update, :destroy]
 
-  resources :events, only: [:index, :show, :create] do
+  resources :events do
     resources :tickets, only: [:index, :create, :update, :destroy]
     post '/orders', to: 'events#order_tickets'
-    patch '/title', to: 'events#update_title'
   end
 
   post '/login', to: 'sessions#create'
+  get '/profile', to: 'sessions#profile'
   post '/signup', to: 'registrations#create'
   delete '/logout', to: 'application#logout'
 
