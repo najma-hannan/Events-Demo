@@ -3,6 +3,7 @@ import PageHeader from "../PageHeader";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
+import ErrorContainer from "../ErrorContainer";
 
 export default function CreateEvent() {
     const navigate = useNavigate();
@@ -38,6 +39,8 @@ export default function CreateEvent() {
                 <Card.Header>Event Details</Card.Header>
 
                 <Card.Body>
+                    <ErrorContainer errors={errors?.base}/>
+
                     <Form validated={validated} className="" onSubmit={handleSubmit}>
                         <Stack gap={3}>
                             <Form.Group>
@@ -84,7 +87,6 @@ export default function CreateEvent() {
                                 <Button type="submit">Create event</Button>
                             </div>
                         </Stack>
-
                     </Form>
                 </Card.Body>
             </Card>

@@ -54,6 +54,7 @@ export default function ListEvents() {
                         <tr>
                             <td>#</td>
                             <td>Title</td>
+                            <td>Description</td>
                             <td>Location</td>
                             <td>Start Date</td>
                             <td>End Date</td>
@@ -66,6 +67,7 @@ export default function ListEvents() {
                             <tr key={event.id}>
                                 <td>{event.id}</td>
                                 <td>{event.title}</td>
+                                <td>{event.description}</td>
                                 <td>{event.location}</td>
                                 <td>{dateFormatter.format(new Date(event.start_date))}</td>
                                 <td>{dateFormatter.format(new Date(event.end_date))}</td>
