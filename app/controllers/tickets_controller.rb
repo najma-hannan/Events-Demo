@@ -12,7 +12,6 @@ class TicketsController < ApplicationController
   end
 
   def index
-    @event = Event.find_by_id!(params[:event_id])
     @tickets = @event.tickets
 
     render json: {

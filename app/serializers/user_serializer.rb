@@ -1,7 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :username, :email  # Changed :name to :username
+  attributes :id, :name, :email
 
   has_many :events
-  has_many :tickets
-
+  has_many :orders
 end

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import EventCard from './EventCard';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import concert2 from '../images/concert2.jpg';
 
-const HomePage = () => {
+const LandingPage = () => {
   const [events, setEvents] = useState([]);
 
   function fetchEvents() {
@@ -21,18 +21,20 @@ const HomePage = () => {
 
   return (
     <div>
-      <h1>Welcome to Event Hub</h1>
+      <h1>Welcome to Events Hub</h1>
       <p>Discover and book exciting events near you.</p>
       <div className="image-container">
       <img src={concert2} alt="Event Hub Logo" />
       </div>
       <div className="event-list">
         {events.map(event => (
-          <EventCard key={event.id} event={event} />
+          <div key={event.id}>
+            <Link to={`/events/${event.id}`}>{event.name}</Link>
+          </div>
         ))}
       </div>
     </div>
   );
 };
 
-export default HomePage;
+export default LandingPage;

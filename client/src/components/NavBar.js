@@ -1,9 +1,7 @@
 import React from "react";
-import { BsCart4 } from "react-icons/bs";
-import Badge from "react-bootstrap/Badge";
-import { Link, useNavigate, useRouteLoaderData } from "react-router-dom"; // Add this import
+import { Link, useNavigate, useRouteLoaderData } from "react-router-dom";
 import { isAuthenticated, logout } from "../utils";
-import { Button } from "react-bootstrap";
+import { Button, NavDropdown } from "react-bootstrap";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -11,21 +9,25 @@ const Navbar = () => {
 
   function logoutAction() {
     logout();
-
     navigate("/");
   }
 
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <Link to="/">Event Hub</Link> {/* Use Link component */}
+        <Link to="/">Events Hub</Link>
       </div>
       <ul className="navbar-links">
         <li>
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/events">Events</Link>
+          <NavDropdown title="Events" id="basic-nav-dropdown">
+            {/* Add your event links here */}
+            <NavDropdown.Item href="#event1">Event 1</NavDropdown.Item>
+            <NavDropdown.Item href="#event2">Event 2</NavDropdown.Item>
+            {/* ... */}
+          </NavDropdown>
         </li>
         <li>
           <Link to="/about">About</Link>
@@ -33,23 +35,18 @@ const Navbar = () => {
         <li>
           <Link to="/contact">Contact</Link>
         </li>
-        <li>
-          <Link to="/cart">
-            <BsCart4 />
-            Cart<Badge bg="danger">9</Badge>
-          </Link>
-        </li>
       </ul>
       {
-        isAuthenticated() ? <div className="navbar-buttons">
+        isAuthenticated() ?
+        <div className="navbar-buttons">
           <span>{user?.email} </span>
           <Button variant="secondary" onClick={logoutAction}>Logout</Button>
         </div> :
-          <div className="navbar-buttons">
-            <Link to="/signup" className="navbar-button"> {/* Use Link component */}
+        <div className="navbar-buttons">
+            <Link to="/signup" className="navbar-button">
               Sign Up
             </Link>
-            <Link to="/login" className="navbar-button"> {/* Use Link component */}
+            <Link to="/login" className="navbar-button">
               Log In
             </Link>
           </div>
