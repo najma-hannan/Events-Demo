@@ -10,4 +10,8 @@ class SessionsController < ApplicationController
       render json: { errors: ['Invalid email or password'] }, status: :unprocessable_entity
     end
   end
+
+  def profile
+    render json: @current_user.to_json(only: [:id, :name, :email, :is_admin])
+  end
 end
