@@ -7,7 +7,7 @@ import ErrorContainer from './ErrorContainer';
 
 const Login = () => {
   const navigate = useNavigate();
-  const revalidator = useRevalidator();
+  const reavalidator = useRevalidator();
 
   const [errors, setErrors] = useState([]);
 
@@ -23,7 +23,7 @@ const Login = () => {
 
       authenticate({ ...user, token });
 
-      revalidator.revalidate();
+      reavalidator.revalidate();
 
       navigate("/");
     } catch (error) {
