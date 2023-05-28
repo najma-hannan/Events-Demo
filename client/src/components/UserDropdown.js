@@ -1,17 +1,13 @@
-import { Link, useNavigate, useRevalidator, useRouteLoaderData } from "react-router-dom";
+import { Link, useRouteLoaderData } from "react-router-dom";
 import { logout } from "../utils";
 import { Button, Dropdown } from "react-bootstrap";
 
 export default function UserDropDown() {
-    const navigate = useNavigate();
-    const revalidator = useRevalidator();
     const user = useRouteLoaderData("root");
 
     function logoutAction() {
         logout();
-
-        revalidator.revalidate();
-        navigate("/", {replace: true});
+        window.location.href = "/";
     }
 
     return (

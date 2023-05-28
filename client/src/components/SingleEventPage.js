@@ -15,7 +15,6 @@ const SingleEventPage = () => {
       const eventId = 1; // Replace with the actual event ID
       const eventResponse = await axios.get(`/api/events/${eventId}`);
       const ticketResponse = await axios.get(`/api/events/${eventId}/tickets`);
-      const orderResponse = await axios.get(`/api/events/${eventId}/orders`);
 
       const eventData = eventResponse.data.event;
       const ticketData = ticketResponse.data.tickets;
