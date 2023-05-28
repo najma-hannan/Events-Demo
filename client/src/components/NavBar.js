@@ -11,7 +11,6 @@ const Navbar = () => {
     <BsNavbar bg="dark" variant="dark" expand="lg" >
       <Container>
         <BsNavbar.Brand as={Link} to={"/"} className="fw-bold text-white fs-2 navbar-logo">
-          {/* <Link to="/">Events Hub</Link> */}
           Events Hub
         </BsNavbar.Brand>
 

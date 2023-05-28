@@ -6,7 +6,6 @@ import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } 
 import LandingPage from './components/LandingPage';
 import LogIn from './components/LogIn';
 import SignUp from './components/SignUp';
-import EventForm from './components/EventForm';
 import SingleEventPage from './components/SingleEventPage';
 import Layout, { loader as layoutLoader } from "./components/Layout";
 import PrivateRoute from "./components/PrivateRoute";
@@ -16,6 +15,7 @@ import AdminPrivateRoute from "./components/AdminPrivateRoute";
 import ListEvents, { loader as listEventsLoader } from "./components/Admin/ListEvents";
 import CreateEvent from "./components/Admin/CreateEvent";
 import EditEvent, { loader as editEventLoader } from "./components/Admin/EditEvent";
+import EventsGalleryPage, {loader as eventGalleryLoader} from "./components/EventsGalleryPage";
 
 
 const router = createBrowserRouter(
@@ -29,7 +29,7 @@ const router = createBrowserRouter(
       <Route path="/login" element={<LogIn />} />
       <Route path="/signup" element={<SignUp />} />
 
-      <Route path="/events" element={<EventForm />} />
+      <Route path="/events" element={<EventsGalleryPage />} loader={eventGalleryLoader} />
 
       <Route element={<PrivateRoute />}>
         <Route path="profile" element={<ProfilePage />} />
