@@ -39,7 +39,7 @@ const SingleEventPage = () => {
   return (
     <>
       <PageHeader title={event.title} actions={<>
-        <Button as={Link} variant="link" to={"/event"}>Back to event gallery</Button>
+        <Button as={Link} variant="link" to={"/events"}>Back to event gallery</Button>
       </>} />
       <Container className="mt-3" fluid="lg">
         <Row className='gy-4'>
