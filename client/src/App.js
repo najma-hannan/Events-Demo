@@ -1,42 +1,31 @@
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
-import { isAuthenticated, retrieveUser } from "./utils";
-import Layout from "./components/Layout";
-import HomePage from "./components/HomePage";
-import EventForm from "./components/EventForm";
-import LogIn from "./components/LogIn";
-import About from "./components/About";
-import Contact from "./components/Contact";
-import SignUp from "./components/SignUp";
-import Cart from "./pages/Cart";
+import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Navbar from './components/NavBar';
+import Footer from './components/Footer';
+import LandingPage from './components/LandingPage';
+import About from './components/About';
+import LogIn from './components/LogIn';
+import SignUp from './components/SignUp';
+import PrivateRoute from './components/PrivateRoute';
+import EventForm from './components/EventForm';
+import SingleEventPage from './components/SingleEventPage';
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route
-      id="root"
-      element={<Layout />}
-      loader={() => {
-        if (isAuthenticated()) {
-          return retrieveUser();
-        }
+const events = [ // Just a placeholder, your data would likely come from an API
+  { id: 1, name: 'Event 1' },
+  { id: 2, name: 'Event 2' },
+];
 
-        return null;
-      }}
-    >
-      <Route path="/" element={<HomePage />} />
-      <Route path="/events" element={<EventForm />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/contact" element={<Contact />} />
-      <Route path="/login" element={<LogIn />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/cart" element={<Cart />} />
-    </Route>
-  )
+const App = () => (
+  <Router>
+    <Navbar />
+    <Route exact path="/" component={() => <LandingPage events={events} />} />
+    <Route path="/about" component={About} />
+    <Route path="/login" component={LogIn} />
+    <Route path="/signup" component={SignUp} />
+    <PrivateRoute path="/events" component={EventForm} />
+    <PrivateRoute path="/event/:id" component={SingleEventPage} />
+    <Footer />
+  </Router>
 );
-
-function App() {
-  return <RouterProvider router={router} />;
-}
 
 export default App;

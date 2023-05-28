@@ -54,15 +54,6 @@ As a normal user, you can:
 - Event attendees.
 - Event management companies.
 
-## Revenue Model
-
-- Event listing fees.
-- Commission on ticket sales.
-- Vendor partnership/referral fees.
-- Advertising and sponsorship.
-- Data insights and analytics.
-- Consultation services.
-
 ## Conclusion
 
 Events Hub offers an innovative and user-friendly solution for event management. By simplifying the event planning process and enhancing user satisfaction, Events Hub has the potential to revolutionize the industry. With the power of Rails and the flexibility of React, Events Hub provides a transformative event management experience.

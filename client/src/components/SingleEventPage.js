@@ -19,7 +19,6 @@ const SingleEventPage = () => {
 
       const eventData = eventResponse.data.event;
       const ticketData = ticketResponse.data.tickets;
-      const orderData = orderResponse.data.orders;
 
       setEvent(eventData);
       setTickets(ticketData);

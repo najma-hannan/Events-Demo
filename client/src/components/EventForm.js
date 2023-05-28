@@ -7,8 +7,8 @@ const EventForm = () => {
   const [description, setDescription] = useState('');
   const [rating, setUpdateRating] = useState('')
 
-const handleSubmit = async (event) => {
-  event.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
     try {
       const response = await fetch('http://localhost:3000/events', {
@@ -16,14 +16,14 @@ const handleSubmit = async (event) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ title, date, location, description, rating}),
+        body: JSON.stringify({ title, date, location, description, rating }),
       });
-const data = await response.json();
-    console.log(data);
 
-  } catch (error) {
-    console.error('Event creation failed', error);
-  }
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error('Event creation failed', error);
+    }
 
     // Reset the form fields
     setTitle('');
@@ -31,8 +31,7 @@ const data = await response.json();
     setLocation('');
     setDescription('');
     setUpdateRating('');
-
-};
+  };
 
 return (
     <form onSubmit={handleSubmit}>
@@ -89,7 +88,7 @@ return (
           onChange={(e) => setUpdateRating(e.target.value)}
         />
       </div>
-      
+
 
       {/* <div>
         <label htmlFor="price">Price:</label>
@@ -100,6 +99,7 @@ return (
           required
         />
       </div> */}
+
       <button type="submit">Create Event</button>
     </form>
   );

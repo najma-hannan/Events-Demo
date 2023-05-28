@@ -4,24 +4,26 @@ class OrdersController < ApplicationController
     user_id = order_params[:user_id]
     tickets = order_params[:tickets]
 
-    order = Order.new(event: event, user_id: user_id)
-    order_items = []
+    def create
+      event = Event.find(params[:id])
+      user_id = order_params[:user_id]
+      tickets = order_params[:tickets]
 
-    tickets.each do |ticket|
-      ticket_id = ticket[:ticket_id]
-      quantity = ticket[:quantity]
+      order = Order.new(event: event, user_id: user_id)
 
-      order_items << OrderItem.new(ticket_id: ticket_id, quantity: quantity)
-    end
+      Order.transaction do
+        order.save!
+        tickets.each do |ticket|
+          ticket_id = ticket[:ticket_id]
+          quantity = ticket[:quantity]
+          order.order_items.create!(ticket_id: ticket_id, quantity: quantity)
+        end
+      end
 
-    order.order_items = order_items
-
-    if order.save
       render json: order, status: :created
-    else
-      render json: { errors: order.errors.full_messages }, status: :unprocessable_entity
+    rescue ActiveRecord::RecordInvalid => e
+      render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
     end
-  end
 
   private
 

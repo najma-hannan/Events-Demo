@@ -1,5 +1,6 @@
 class Ticket < ApplicationRecord
   belongs_to :event
+  has_many :order_items
 
   validates :name, presence: true
   validates :name, uniqueness: { scope: :event_id, message: "must be unique within the event" }, on: :create
