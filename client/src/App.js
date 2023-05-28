@@ -13,6 +13,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import ProfilePage from "./components/ProfilePage";
 import './api/bootstrap';
 import AdminPrivateRoute from "./components/AdminPrivateRoute";
+import ListEvents, {loader as listEventsLoader} from "./components/Admin/ListEvents";
 
 
 const router = createBrowserRouter(
@@ -35,7 +36,7 @@ const router = createBrowserRouter(
 
         {/* Admin related routes */}
         <Route path="admin" element={<AdminPrivateRoute/>}>
-          <Route path="events" element={<>Events Admin</>}/>
+          <Route path="events" element={<ListEvents/>} loader={listEventsLoader}/>
         </Route>
       </Route>
 

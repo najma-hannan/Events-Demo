@@ -32,3 +32,11 @@ export async function retrieveUser() {
 export function logout() {
     localStorage.removeItem("logged_in_user");
 }
+
+export const dateFormatter = new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+  });
