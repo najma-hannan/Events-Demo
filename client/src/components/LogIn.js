@@ -19,9 +19,9 @@ const Login = () => {
 
     try {
       const response = await axios.post("/login", data);
-      const { user, token } = response.data;
+      const { token } = response.data;
 
-      authenticate({ ...user, token });
+      authenticate(token);
 
       reavalidator.revalidate();
 

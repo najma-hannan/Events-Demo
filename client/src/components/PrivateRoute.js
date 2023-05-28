@@ -4,7 +4,7 @@ import { isAuthenticated } from '../utils';
 
 const PrivateRoute = ({ children }) => {
   if (!isAuthenticated()) {
-    return <Navigate to={"/"} replace={true} />
+    return <Navigate to={"/login"} replace={true} />
   }
 
   return children ? children : <Outlet />

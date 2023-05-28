@@ -22,7 +22,7 @@ export default function UserDropDown() {
 
             <Dropdown.Menu>
                 <Dropdown.Item disabled as="div" className="mb-0 text-muted fs-6">
-                    <span className="m-0">{user?.name} <br/> {user.email}</span>
+                    <span className="m-0">{user?.name} <br/> {user?.email}</span>
                 </Dropdown.Item>
                 <Dropdown.Divider/>
                 <Dropdown.Item as={Link} to={"/profile"}>

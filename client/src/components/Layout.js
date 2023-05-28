@@ -4,12 +4,12 @@ import Navbar from "./NavBar";
 import Footer from "./Footer";
 import { isAuthenticated, retrieveUser } from "../utils";
 
-export function loader() {
-  if (isAuthenticated()) {
-    return retrieveUser();
+export async function loader() {
+  if (!isAuthenticated()) {
+    return null;
   }
 
-  return null;
+  return await retrieveUser();
 }
 
 export default function Layout() {
