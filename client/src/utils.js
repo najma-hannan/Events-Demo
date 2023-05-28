@@ -18,6 +18,13 @@ export async function retrieveUser() {
         return response.data;
     } catch (error) {
         console.error(error);
+
+        if(error.response?.status === 401) {
+            logout();
+            return null;
+        }
+
+
         throw new Error("Trouble fetching logged in user profile.")
     }
 }
