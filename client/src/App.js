@@ -13,7 +13,9 @@ import PrivateRoute from "./components/PrivateRoute";
 import ProfilePage from "./components/ProfilePage";
 import './api/bootstrap';
 import AdminPrivateRoute from "./components/AdminPrivateRoute";
-import ListEvents, {loader as listEventsLoader} from "./components/Admin/ListEvents";
+import ListEvents, { loader as listEventsLoader } from "./components/Admin/ListEvents";
+import CreateEvent from "./components/Admin/CreateEvent";
+import EditEvent, { loader as editEventLoader } from "./components/Admin/EditEvent";
 
 
 const router = createBrowserRouter(
@@ -30,13 +32,17 @@ const router = createBrowserRouter(
       <Route path="/events" element={<EventForm />} />
 
       <Route element={<PrivateRoute />}>
-        <Route path="profile" element={<ProfilePage/>} />
+        <Route path="profile" element={<ProfilePage />} />
 
         <Route path="events/:id" element={<SingleEventPage />} />
 
         {/* Admin related routes */}
-        <Route path="admin" element={<AdminPrivateRoute/>}>
-          <Route path="events" element={<ListEvents/>} loader={listEventsLoader}/>
+        <Route path="admin" element={<AdminPrivateRoute />}>
+          <Route path="events">
+            <Route index={true} element={<ListEvents />} loader={listEventsLoader} />
+            <Route path="new" element={<CreateEvent />} />
+            <Route path=":event_id/edit" element={<EditEvent />} loader={editEventLoader} />
+          </Route>
         </Route>
       </Route>
 
