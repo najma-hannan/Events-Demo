@@ -25,7 +25,7 @@ const Login = () => {
 
       reavalidator.revalidate();
 
-      navigate("/");
+      navigate("/", {replace: true});
     } catch (error) {
       if (error.response.status === 422) {
         setErrors(error.response.data.errors);
