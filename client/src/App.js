@@ -12,6 +12,7 @@ import Layout, { loader as layoutLoader } from "./components/Layout";
 import PrivateRoute from "./components/PrivateRoute";
 import ProfilePage from "./components/ProfilePage";
 import './api/bootstrap';
+import AdminPrivateRoute from "./components/AdminPrivateRoute";
 
 
 const router = createBrowserRouter(
@@ -28,9 +29,14 @@ const router = createBrowserRouter(
       <Route path="/events" element={<EventForm />} />
 
       <Route element={<PrivateRoute />}>
-        <Route path="/profile" element={<ProfilePage/>} />
+        <Route path="profile" element={<ProfilePage/>} />
 
-        <Route path="/events/:id" element={<SingleEventPage />} />
+        <Route path="events/:id" element={<SingleEventPage />} />
+
+        {/* Admin related routes */}
+        <Route path="admin" element={<AdminPrivateRoute/>}>
+          <Route path="events" element={<>Events Admin</>}/>
+        </Route>
       </Route>
 
     </Route>
