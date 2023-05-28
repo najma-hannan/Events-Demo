@@ -14,14 +14,14 @@ export async function loader() {
 
 export default function Layout() {
   return (
-    <>
+    <div className="d-flex flex-column" style={{minHeight: '100vh'}}>
       <header>
         <Navbar />
       </header>
-      <main>
+      <main className="flex-grow-1">
         <Outlet />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
