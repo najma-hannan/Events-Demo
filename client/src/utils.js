@@ -1,4 +1,5 @@
 import axios from "axios";
+import { format } from "date-fns";
 
 export function authenticate(auth_token) {
     localStorage.setItem("logged_in_user", auth_token);
@@ -40,3 +41,7 @@ export const dateFormatter = new Intl.DateTimeFormat('en-US', {
     hour: 'numeric',
     minute: 'numeric',
   });
+
+  export function formControlDateFormat(date) {
+    return format(date, "yyyy-MM-dd'T'hh:mm")
+  }
