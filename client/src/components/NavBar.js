@@ -3,28 +3,42 @@ import { Link } from "react-router-dom";
 import { isAuthenticated } from "../utils";
 
 import UserDropDown from "./UserDropdown";
+import { Navbar as BsNavbar, Button, Container, Nav } from "react-bootstrap";
 
 const Navbar = () => {
 
   return (
-    <nav className="navbar">
-      <div className="navbar-logo">
-        <Link to="/">Events Hub</Link>
-      </div>
+    <BsNavbar bg="dark" variant="dark" expand="lg" >
+      <Container>
+        <BsNavbar.Brand as={Link} to={"/"} className="fw-bold text-white fs-2 navbar-logo">
+          {/* <Link to="/">Events Hub</Link> */}
+          Events Hub
+        </BsNavbar.Brand>
 
-      {
-        isAuthenticated() ?
-          <UserDropDown /> :
-          <div className="navbar-buttons">
-            <Link to="/signup" className="navbar-button">
-              Sign Up
-            </Link>
-            <Link to="/login" className="navbar-button">
-              Log In
-            </Link>
-          </div>
-      }
-    </nav>
+        <BsNavbar.Toggle aria-controls={"main-navbar"} />
+        <BsNavbar.Collapse id="main-navbar">
+          <Nav bg="dark" className="ms-auto">
+            <Nav.Link as={Link} to="/events">Events</Nav.Link>
+          </Nav>
+        </BsNavbar.Collapse>
+
+        <div>
+          {
+            isAuthenticated() ?
+              <UserDropDown /> :
+              <div>
+                <Button as={Link} variant={"secondary"} to="/login">
+                  Log In
+                </Button>
+                <Button className="ms-2" as={Link} variant={"success"} to="/signup">
+                  Sign Up
+                </Button>
+              </div>
+          }
+
+        </div>
+      </Container>
+    </BsNavbar>
   );
 };
 
