@@ -17,9 +17,9 @@ const SignUp = () => {
 
     try {
       const response = await axios.post("/signup", { user: payload });
-      const { user, token } = await response.data;
+      const { token } = await response.data;
 
-      authenticate({ ...user, token });
+      authenticate(token);
 
       navigate("/");
     } catch (error) {

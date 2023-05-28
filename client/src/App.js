@@ -9,6 +9,9 @@ import SignUp from './components/SignUp';
 import EventForm from './components/EventForm';
 import SingleEventPage from './components/SingleEventPage';
 import Layout, { loader as layoutLoader } from "./components/Layout";
+import PrivateRoute from "./components/PrivateRoute";
+import ProfilePage from "./components/ProfilePage";
+import './api/bootstrap';
 
 
 const router = createBrowserRouter(
@@ -23,7 +26,13 @@ const router = createBrowserRouter(
       <Route path="/signup" element={<SignUp />} />
 
       <Route path="/events" element={<EventForm />} />
-      <Route path="/events/:id" element={<SingleEventPage />} />
+
+      <Route element={<PrivateRoute />}>
+        <Route path="/profile" element={<ProfilePage/>} />
+
+        <Route path="/events/:id" element={<SingleEventPage />} />
+      </Route>
+
     </Route>
   )
 );

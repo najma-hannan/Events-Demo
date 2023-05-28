@@ -1,15 +1,25 @@
-export function authenticate(user) {
-    localStorage.setItem("logged_in_user", JSON.stringify(user));
+import axios from "axios";
+
+export function authenticate(auth_token) {
+    localStorage.setItem("logged_in_user", auth_token);
 }
 
 export function isAuthenticated() {
-    const user = retrieveUser();
-
-    return user !== null;
+    return localStorage.getItem("logged_in_user") !== null;
 }
 
-export function retrieveUser() {
-    return JSON.parse(localStorage.getItem("logged_in_user"))
+export async function retrieveUser() {
+    if (!isAuthenticated()) {
+        return null;
+    }
+
+    try {
+        const response = await axios.get("/profile");
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw new Error("Trouble fetching logged in user profile.")
+    }
 }
 
 export function logout() {
