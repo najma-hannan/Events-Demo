@@ -1,6 +1,7 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :update, :destroy]
   skip_before_action :authenticate_user, only: [:index, :show]
+  before_action :set_event, only: [:show, :update, :destroy]
+  before_action :authorize_user, only: [:update, :destroy]
 
   def index
     events = Event.all
@@ -40,7 +41,7 @@ class EventsController < ApplicationController
   end
 
   def authorize_user
-    if !@current_user.is_admin || @current_user== @event.organizer
+    if !@current_user.is_admin || @current_user != @event.organizer
       render json: {message: "Unauthorized" }, status: :unauthorized
     end
   end
