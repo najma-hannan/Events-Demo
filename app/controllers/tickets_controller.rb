@@ -3,29 +3,19 @@ class TicketsController < ApplicationController
   before_action :set_ticket, only: [:update, :destroy]
 
   def create
-    ticket = @event.tickets.new(ticket_params)
-    if ticket.save
-      render json: ticket, status: :created
-    else
-      render json: {errors: ticket.errors.to_hash(true)}, status: :unprocessable_entity
-    end
+    ticket = @event.tickets.create!(ticket_params)
+    render json: ticket, status: :created
   end
 
   def index
     @tickets = @event.tickets
 
-    render json: {
-      event: EventSerializer.new(@event),
-      tickets: ActiveModelSerializers::SerializableResource.new(@tickets, each_serializer: TicketSerializer)
-    }
+    render json: @tickets
   end
 
   def update
-    if @ticket.update(ticket_params)
-      render json: @ticket
-    else
-      render json: {errors: @ticket.errors.to_hash(true)}, status: :unprocessable_entity
-    end
+    @ticket.update(ticket_params)
+    render json: @ticket
   end
 
   def destroy
