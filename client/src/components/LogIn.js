@@ -2,12 +2,10 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { authenticate } from '../utils';
-import { useNavigate, useRevalidator } from 'react-router-dom';
+
 import ErrorContainer from './ErrorContainer';
 
 const Login = () => {
-  const navigate = useNavigate();
-  const revalidator = useRevalidator();
 
   const [errors, setErrors] = useState([]);
 
@@ -19,13 +17,11 @@ const Login = () => {
 
     try {
       const response = await axios.post("/login", data);
-      const { user, token } = response.data;
+      const { token } = response.data;
 
-      authenticate({ ...user, token });
+      authenticate(token);
 
-      revalidator.revalidate();
-
-      navigate("/");
+      window.location.href = "/"
     } catch (error) {
       if (error.response.status === 422) {
         setErrors(error.response.data.errors);
@@ -38,24 +34,33 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
+    <div className='container mt-4'>
+      <div className="col-5 card mx-auto">
 
-      <ErrorContainer errors={errors} className={"container mt-1"} />
+        <div className="card-body">
+          <h2 className="fs-3">Login</h2>
 
-      <Form className="mt-1" onSubmit={handleLogin}>
-        <Form.Group>
-          <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" autoComplete='email' placeholder="Enter email" name="email" required />
-        </Form.Group>
+          <ErrorContainer errors={errors} className={"container mt-1"} />
 
-        <Form.Group className="mt-3">
-          <Form.Label>Password</Form.Label>
-          <Form.Control type="password" autoComplete='current-password' placeholder="Enter password" name="password" required />
-        </Form.Group>
+          <Form className="mt-3" onSubmit={handleLogin}>
+            <Form.Group>
+              <Form.Label>Email Address</Form.Label>
+              <Form.Control type="email" autoComplete='email' placeholder="someone@example.net" name="email" required />
+            </Form.Group>
 
-        <Button variant='primary' type="submit">Login</Button>
-      </Form>
+            <Form.Group className="mt-3">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" autoComplete='current-password' placeholder="xxxxxxx" name="password" required />
+            </Form.Group>
+
+            <div className="mt-3 d-flex justify-content-end">
+              <Button type="submit">Login</Button>
+            </div>
+          </Form>
+        </div>
+
+
+      </div>
     </div>
   );
 };

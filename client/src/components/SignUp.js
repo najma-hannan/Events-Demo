@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 
 import axios from 'axios';
 import ErrorContainer from './ErrorContainer';
-import { useNavigate } from 'react-router-dom';
 import { authenticate } from '../utils';
+import { Button, Form } from 'react-bootstrap';
 
 const SignUp = () => {
   const [errors, setErrors] = useState([]);
-  const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -17,11 +16,11 @@ const SignUp = () => {
 
     try {
       const response = await axios.post("/signup", { user: payload });
-      const { user, token } = await response.data;
+      const { token } = await response.data;
 
-      authenticate({ ...user, token });
+      authenticate(token);
 
-      navigate("/");
+      window.location.href = "/";
     } catch (error) {
       if (error.response.status === 422) {
         setErrors(error.response.data.errors);
@@ -33,49 +32,62 @@ const SignUp = () => {
   };
 
   return (
-    <div>
-      <h2>Sign Up</h2>
-      <ErrorContainer className="container mt-1" errors={errors} />
+    <div className="container mt-4">
+      <div className="card col-5 mx-auto">
+        <div className="card-body">
+          <h2 className="fs-3">Sign Up</h2>
 
-      <form className="mt-1" onSubmit={handleSignUp}>
-        <div>
-          <label>Full Name:</label>
-          <input
-            type="text"
-            name="name"
-            autoComplete='name'
-            required
-          />
+          <ErrorContainer className="container mt-1" errors={errors} />
+
+          <Form className="mt-3" onSubmit={handleSignUp}>
+            <Form.Group>
+              <Form.Label>Full Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                autoComplete='name'
+                placeholder="Jamie Earl Jones"
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mt-3">
+              <Form.Label>Email Address</Form.Label>
+              <Form.Control
+                type="email"
+                name={"email"}
+                autoComplete='email'
+                placeholder='someone@example.net'
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mt-3">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                autoComplete='current-password'
+                name={"password"}
+                placeholder='xxxxxxx'
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mt-3">
+              <Form.Label>Password Confirmation</Form.Label>
+              <Form.Control
+                type="password"
+                autoComplete='current-password'
+                name={"password-confirmation"}
+                placeholder="xxxxxxx"
+                required
+              />
+            </Form.Group>
+
+            <div className="mt-3 d-flex justify-content-end">
+              <Button type="submit">Sign Up</Button>
+            </div>
+          </Form>
         </div>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            name={"email"}
-            autoComplete='email'
-            required
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            autoComplete='current-password'
-            name={"password"}
-            required
-          />
-        </div>
-        <div>
-          <label>Password Confirm:</label>
-          <input
-            type="password"
-            autoComplete='current-password'
-            name={"password-confirmation"}
-            required
-          />
-        </div>
-        <button type="submit">Sign Up</button>
-      </form>
+
+      </div>
     </div>
   );
 };

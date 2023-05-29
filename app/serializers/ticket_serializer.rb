@@ -1,3 +1,3 @@
 class TicketSerializer < ActiveModel::Serializer
-  attributes :id, :name, :price, :quantity, :available_until, :event
+  attributes :id, :name, :price, :quantity, :available_until
 end
