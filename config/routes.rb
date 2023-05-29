@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  namespace :api do
+  scope '/api' do
     resources :users, only: [:create, :show, :update, :destroy]
 
     resources :events do
