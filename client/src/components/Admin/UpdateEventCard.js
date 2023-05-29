@@ -6,9 +6,6 @@ import { formControlDateFormat } from "../../utils";
 import ErrorContainer from "../ErrorContainer";
 
 export default function UpdateEventCard({ event }) {
-
-    console.log(event.tickets);
-
     const [errors, setErrors] = useState({});
     const [validated, setValidated] = useState(false);
 

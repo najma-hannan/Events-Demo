@@ -2,9 +2,11 @@ Rails.application.routes.draw do
   resources :users, only: [:create, :show, :update, :destroy]
 
   resources :events do
-    resources :tickets, only: [:index, :create, :update, :destroy]
+    resources :tickets, only: [:index, :create]
     post '/orders', to: 'events#order_tickets'
   end
+
+  resources :tickets, only: [:update, :destroy]
 
   post '/login', to: 'sessions#create'
   get '/profile', to: 'sessions#profile'

@@ -1,8 +1,9 @@
 import { Link, useLoaderData } from "react-router-dom";
 import PageHeader from "../PageHeader";
-import { Button, Card, Container, Stack } from "react-bootstrap";
+import { Button, Container, Stack } from "react-bootstrap";
 import axios from "axios";
 import UpdateEventCard from "./UpdateEventCard";
+import { EventTicketTypesCard } from "./EventTicketTypesCard";
 
 export async function loader({ params }) {
     const eventId = params.event_id;
@@ -43,15 +44,7 @@ export default function EditEvent() {
         <Container className="py-4">
             <Stack gap={4} className="col-lg-10">
                 <UpdateEventCard event={event}/>
-
-
-                <Card>
-                    <Card.Header>Ticket Information</Card.Header>
-                    <Card.Body>
-
-                    </Card.Body>
-                </Card>
-
+                <EventTicketTypesCard event={event}/>
             </Stack>
         </Container>
     </>
