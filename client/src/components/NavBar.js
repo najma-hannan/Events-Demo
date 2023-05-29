@@ -8,7 +8,7 @@ import { Navbar as BsNavbar, Button, Container, Nav } from "react-bootstrap";
 const Navbar = () => {
 
   return (
-    <BsNavbar bg="dark" variant="dark" expand="lg" >
+    <BsNavbar bg="dark" variant="dark" expand="sm" >
       <Container>
         <BsNavbar.Brand as={Link} to={"/"} className="fw-bold text-white fs-2 navbar-logo">
           Events Hub
