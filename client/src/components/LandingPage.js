@@ -1,39 +1,38 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link, useLoaderData } from 'react-router-dom';
 import axios from 'axios';
-import concert2 from '../images/concert2.jpg';
+import { HeroSection } from './HeroSection';
+
+export async function loader() {
+  try {
+    const response = await axios.get("/events");
+    return await response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 
 const LandingPage = () => {
-  const [events, setEvents] = useState([]);
+  const events = useLoaderData();
 
-  function fetchEvents() {
-    axios.get("/events")
-      .then(res => {
-        setEvents(res.data);
-      }).catch(error => {
-        console.error(error);
-      });
-  }
-
-  useEffect(() => {
-    fetchEvents();
-  }, []);
 
   return (
-    <div>
-      <h1>Welcome to Events Hub</h1>
-      <p>Discover and book exciting events near you.</p>
-      <div className="image-container">
-      <img src={concert2} alt="Event Hub Logo" />
-      </div>
-      <div className="event-list">
-        {events.map(event => (
-          <div key={event.id}>
-            <Link to={`/events/${event.id}`}>{event.name}</Link>
-          </div>
-        ))}
-      </div>
-    </div>
+    <>
+      <HeroSection />
+
+      <section className="py-5 container">
+        <h2>Upcoming Events</h2>
+
+        <ul className="event-list">
+          {events.map(event => (
+            <li key={event.id}>
+              <Link to={`/events/${event.id}`}>{event.name}</Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </>
   );
 };
 
