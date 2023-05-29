@@ -23,7 +23,7 @@ export default function EventsGalleryPage() {
             <Container fluid>
                 {
                     events.length > 0 ?
-                        <ul className="row row-cols-lg-4 row-cols-sm-2 row-cols-md-3 g-4">
+                        <ul className="list-unstyled row row-cols-lg-4 row-cols-sm-2 row-cols-md-3 g-4">
                             {events.map((event) => (
                                 <li key={event.id}>
                                     <Card>

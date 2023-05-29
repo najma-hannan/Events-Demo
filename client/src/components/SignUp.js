@@ -32,7 +32,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="container mt-4">
+    <div className="container py-4">
       <div className="card col-5 mx-auto">
         <div className="card-body">
           <h2 className="fs-3">Sign Up</h2>
