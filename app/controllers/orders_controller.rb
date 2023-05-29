@@ -1,8 +1,4 @@
 class OrdersController < ApplicationController
-  def create
-    event = Event.find(params[:id])
-    user_id = order_params[:user_id]
-    tickets = order_params[:tickets]
 
     def create
       event = Event.find(params[:id])
@@ -21,8 +17,6 @@ class OrdersController < ApplicationController
       end
 
       render json: order, status: :created
-    rescue ActiveRecord::RecordInvalid => e
-      render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
     end
 
   private
