@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useReducer } from "react";
+import React, { createContext, useEffect, useReducer, useState } from "react";
 import { cartReducer } from "./cartReducer";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
@@ -6,26 +6,20 @@ export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const initialState = {
-    cart: [],
+    cartItems: [],
+    selectedEvents: [],
   };
-  const [cartState, cartDispatch] = useReducer(cartReducer, initialState);
-  const [eventList, setEventList] = useState([]);
+  // const [state, dispatch] = useReducer(cartReducer, {
+  //   cart: [],
+  // });
 
-  // const [eventList, setEventList] = useLocalStorage("eventList", []);
-  // const [eventList, setEventList] = useLocalStorage("eventList", []);
+  const [cartState, cartDispatch] = useReducer(cartReducer, initialState);
+  const [eventList, setEventList] = useLocalStorage("eventList", []);
   const [selectedEvents, setSelectedEvents] = useLocalStorage(
-    // Use the useLocalStorage hook
-    "selectedEvents", // Provide the key for localStorage
+    "selectedEvents",
     []
   );
 
-  // useEffect(() => {
-  //   fetch("https://63cbc73dea85515415153ca7.mockapi.io/campaignData/refferals")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setEventList(data);
-  //     });
-  // }, []);
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -39,22 +33,62 @@ export const CartProvider = ({ children }) => {
     };
 
     fetchEvents();
-  }, []);
+  }, [setEventList]);
+
+  // const addToCart = (eventItem) => {
+  //   const isItemInCart = selectedEvents.some(
+  //     (item) => item.id === eventItem.id
+  //   );
+  //   if (isItemInCart) {
+  //     console.log("Item is already in the cart:", eventItem);
+  //   } else {
+  //     setSelectedEvents([...selectedEvents, eventItem]);
+  //     setEventList(
+  //       eventList.filter((cardItem) => cardItem.eventId !== eventItem.eventId)
+  //     );
+  //     console.log("Item added to cart:", eventItem);
+  //     cartDispatch({
+  //       type: "SET_CART",
+  //       payload: updatedCart,
+  //       // payload: [...selectedEvents, eventItem],
+  //     });
+  //   }
+  // };
 
   const addToCart = (eventItem) => {
-    setSelectedEvents([...selectedEvents, eventItem]);
-    setEventList(eventList.filter((card) => card.id !== eventItem.id));
-    console.log("Item added to cart:", eventItem);
+    const isItemInCart = selectedEvents.some(
+      (item) => item.id === eventItem.id
+    );
+    if (isItemInCart) {
+      console.log("Item is already in the cart:", eventItem);
+    } else {
+      const updatedCart = [...selectedEvents, eventItem];
+      setSelectedEvents(updatedCart);
+      setEventList(
+        eventList.filter((cardItem) => cardItem.eventId !== eventItem.eventId)
+      );
+      console.log("Item added to cart:", eventItem);
+      cartDispatch({
+        type: "SET_CART",
+        payload: updatedCart,
+      });
+    }
   };
 
+  // const removeFromCart = (itemId) => {
+  //   cartDispatch((prevState) => ({
+  //     ...prevState,
+  //     cart: prevState.cart.filter((item) => item.id !== itemId),
+  //   }));
+  // };
+
   const removeFromCart = (itemId) => {
-    setSelectedEvents((prevItems) =>
-      prevItems.filter((item) => item.id !== itemId)
-    );
+    cartDispatch({ type: "REMOVE_FROM_CART", payload: { id: itemId } });
   };
 
   const clearCart = () => {
     setSelectedEvents([]);
+    cartDispatch({ type: "SET_CART", payload: [] });
   };
 
   const cartCount = selectedEvents.length;
@@ -63,6 +97,8 @@ export const CartProvider = ({ children }) => {
     <>
       <CartContext.Provider
         value={{
+          // state,
+          // dispatch,
           eventList,
           cartState,
           cartDispatch,

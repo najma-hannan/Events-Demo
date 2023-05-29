@@ -1,12 +1,14 @@
-import React, { useContext } from "react";
+import React from "react";
 import Card from "react-bootstrap/Card";
-import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import StarRating from "./StarRating";
-import { CartContext } from "../context/CartContext";
 
-export const CardItem = ({ eventItem }) => {
-  const { addToCart } = useContext(CartContext);
+export const CardItem = ({ eventItem, addToCart, selectedEvents }) => {
+  const handleAddToCart = () => {
+    addToCart(eventItem);
+  };
+
+  const isItemInCart = selectedEvents.some((item) => item.id === eventItem.id);
 
   return (
     <div>
@@ -26,8 +28,13 @@ export const CardItem = ({ eventItem }) => {
             {/* <Badge bg="secondary">Ksh {eventItem.price}</Badge> */}
             <StarRating rating={eventItem.rating} />
           </Card.Subtitle>
-          <Button variant="primary" onClick={() => addToCart(eventItem)}>
-            Add To Cart
+          <Button
+            type="button"
+            variant={isItemInCart ? "danger" : "success"}
+            onClick={handleAddToCart}
+            disabled={isItemInCart}
+          >
+            {isItemInCart ? "Item in Cart" : "Add to Cart"}
           </Button>
         </Card.Body>
       </Card>

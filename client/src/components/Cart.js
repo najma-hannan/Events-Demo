@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
@@ -6,14 +6,16 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Form from "react-bootstrap/Form";
 import { AiFillDelete } from "react-icons/ai";
-import { CartContext } from "../context/CartContext";
 import StarRating from "./StarRating";
+import { CartContext } from "../context/CartContext";
+import axios from "axios";
 
-export default function Cart({ eventList }) {
-  const { cartState, cartDispatch, selectedEvents } = useContext(CartContext);
-  const { cart } = cartState;
-
+export default function Cart() {
+  const { cartState, cartDispatch, clearCart, removeFromCart, selectedEvents } =
+    useContext(CartContext);
+  const cart = cartState.cartItems;
   const [total, setTotal] = useState(0);
+  const [checkoutSuccess, setCheckoutSuccess] = useState(false);
 
   useEffect(() => {
     setTotal(
@@ -21,70 +23,113 @@ export default function Cart({ eventList }) {
     );
   }, [cart]);
 
+  const removeCartItem = (eventItem) => {
+    removeFromCart(eventItem.id);
+    //  cartDispatch({ type: "REMOVE_FROM_CART", payload: eventItem });
+  };
+
+  const handleClearCart = () => {
+    clearCart();
+  };
+
+  // useEffect(() => {
+  //   const handleCheckout = async () => {
+  //     try {
+  //       await axios.post("http://localhost:3000/tickets", selectedEvents);
+  //       clearCart();
+  //       setCheckoutSuccess(true);
+  //     } catch (error) {
+  //       console.error("Error during checkout:", error);
+  //     }
+  //   };
+
+  //   if (selectedEvents.length > 0) {
+  //     handleCheckout();
+  //   }
+  // }, [selectedEvents]);
+
   return (
     <>
-      <div className="home">
-        <div className="productContainer">
-          <ListGroup>
-            {cart.map((prod) => (
-              <ListGroup.Item key={prod.id}>
-                <Row>
-                  <Col md={2}>
-                    <Image src={prod.image} alt={prod.name} fluid rounded />
-                  </Col>
-                  <Col md={2}>
-                    <span>{prod.name}</span>
-                  </Col>
-                  <Col md={2}>₹ {prod.price}</Col>
-                  <Col md={2}>
-                    <StarRating rating={prod.ratings} />
-                  </Col>
-                  <Col md={2}>
-                    <Form.Control
-                      as="select"
-                      value={prod.qty}
-                      onChange={(e) =>
-                        cartDispatch({
-                          type: "CHANGE_CART_QTY",
-                          payload: {
-                            id: prod.id,
-                            qty: e.target.value,
-                          },
-                        })
-                      }
-                    >
-                      {[...Array(prod.inStock).keys()].map((x) => (
-                        <option key={x + 1}>{x + 1}</option>
-                      ))}
-                    </Form.Control>
-                  </Col>
-                  <Col md={2}>
-                    <Button
-                      type="button"
-                      variant="light"
-                      onClick={() =>
-                        cartDispatch({
-                          type: "REMOVE_FROM_CART",
-                          payload: prod,
-                        })
-                      }
-                    >
-                      <AiFillDelete fontSize="20px" />
-                    </Button>
-                  </Col>
-                </Row>
-              </ListGroup.Item>
-            ))}
-          </ListGroup>
+      <div>
+        <div>
+          {cart.length === 0 ? (
+            <div>No items in the cart</div>
+          ) : (
+            <ListGroup>
+              {cart.map((eventItem) => (
+                <ListGroup.Item key={eventItem.id}>
+                  <Row>
+                    <Col md={2}>
+                      <Image
+                        src={eventItem.image}
+                        alt={eventItem.name}
+                        fluid
+                        rounded
+                      />
+                    </Col>
+                    <Col md={2}>
+                      <span>{eventItem.name}</span>
+                    </Col>
+                    <Col md={2}>Ks {eventItem.price}</Col>
+                    <Col md={2}>
+                      <StarRating rating={eventItem.rating} />
+                    </Col>
+                    <Col md={2}>
+                      <Form.Control
+                        as="select"
+                        value={eventItem.qty}
+                        onChange={(e) =>
+                          cartDispatch({
+                            type: "CHANGE_CART_QTY",
+                            payload: {
+                              id: eventItem.id,
+                              qty: parseInt(e.target.value),
+                            },
+                          })
+                        }
+                      >
+                        {[...Array(eventItem.inStock).keys()].map((x) => (
+                          <option key={x + 1}>{x + 1}</option>
+                        ))}
+                      </Form.Control>
+                    </Col>
+                    <Col md={2}>
+                      <Button
+                        type="button"
+                        variant="light"
+                        onClick={() => removeCartItem(eventItem)}
+                      >
+                        <AiFillDelete fontSize="20px" />
+                      </Button>
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          )}
         </div>
         <div className="filters summary">
           <span className="title">Subtotal ({cart.length}) items</span>
           <span style={{ fontWeight: 700, fontSize: 20 }}>
             Total: Ksh {total}
           </span>
-          <Button type="button" disabled={cart.length === 0}>
+          <Button
+            type="button"
+            disabled={cart.length === 0}
+            onClick={handleClearCart}
+          >
+            Clear Cart
+          </Button>
+          <Button
+            type="button"
+            disabled={cart.length === 0}
+            onClick={handleCheckout}
+          >
             Proceed to Checkout
           </Button>
+          {checkoutSuccess && (
+            <div className="success-message">Checkout successful!</div>
+          )}
         </div>
       </div>
     </>

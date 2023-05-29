@@ -1,20 +1,26 @@
-import React from "react";
-
-// cartReducer.js
 export const cartReducer = (state, action) => {
   switch (action.type) {
-    case "ADD_TO_CART":
-      return { ...state, cart: [...state.cart, { ...action.payload, qty: 1 }] };
+    case "SET_CART":
+      console.log("Payload:", action.payload);
+      return {
+        ...state,
+        cartItems: action.payload,
+      };
+
     case "REMOVE_FROM_CART":
       return {
         ...state,
-        cart: state.cart.filter((c) => c.id !== action.payload.id),
+        cartItems: state.cartItems.filter(
+          (item) => item.id !== action.payload.id
+        ),
       };
     case "CHANGE_CART_QTY":
       return {
         ...state,
-        cart: state.cart.map((c) =>
-          c.id === action.payload.id ? { ...c, qty: action.payload.qty } : c
+        cartItems: state.cartItems.map((item) =>
+          item.id === action.payload.id
+            ? { ...item, qty: action.payload.qty }
+            : item
         ),
       };
     default:
