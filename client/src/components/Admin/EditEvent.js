@@ -4,6 +4,7 @@ import { Button, Container, Stack } from "react-bootstrap";
 import axios from "axios";
 import UpdateEventCard from "./UpdateEventCard";
 import { EventTicketTypesCard } from "./EventTicketTypesCard";
+import EventOrdersCard from "./EventOrdersCard";
 
 export async function loader({ params }) {
     const eventId = params.event_id;
@@ -12,22 +13,19 @@ export async function loader({ params }) {
         return null;
     }
 
-    try {
-        const response = await axios.get(`events/${eventId}`);
-        return response.data;
-    } catch (error) {
-        console.error(error);
-
-        if (error.response?.status === 404) {
-            return null;
-        }
-
-        throw new Error(error.message);
-    }
+    return Promise.all([
+        axios.get(`events/${eventId}`),
+        axios.get(`events/${eventId}/orders`)
+    ]).then(([eventResponse, ordersResponse]) => {
+        return { event: eventResponse.data, orders: ordersResponse.data };
+    }).catch(([eventError, ordersError]) => {
+        console.error({ eventError, ordersError });
+        return { event: null, orders: [] };
+    });
 }
 
 export default function EditEvent() {
-    const event = useLoaderData();
+    const {event, orders} = useLoaderData();
 
     if (!event) {
         return <>
@@ -43,8 +41,9 @@ export default function EditEvent() {
 
         <Container className="py-4">
             <Stack gap={4} className="col-lg-10">
-                <UpdateEventCard event={event}/>
-                <EventTicketTypesCard event={event}/>
+                <UpdateEventCard event={event} />
+                <EventTicketTypesCard event={event} />
+                <EventOrdersCard event={event} orders={orders}/>
             </Stack>
         </Container>
     </>
