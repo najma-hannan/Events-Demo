@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
 
   def create
     @event.transaction do
-      order = @event.orders.create!(user_id: order_params[:user_id])
+      order = @event.orders.create!(user_id: @current_user.id)
 
       order_params[:tickets].each do |ticket|
         ticket_instance = Ticket.find(ticket[:ticket_id])
@@ -25,7 +25,7 @@ class OrdersController < ApplicationController
   end
 
   def order_params
-    params.permit(:user_id, tickets: [:ticket_id, :quantity])
+    params.permit(tickets: [:ticket_id, :quantity])
   end
 
 end
