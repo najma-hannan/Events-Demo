@@ -69,10 +69,12 @@ export function PurchaseTicketForm({ event }) {
                         <ul className="list-unstyled">
                             {
                                 recentOrder?.order_items.map(({ ticket, quantity, price }) => (<li key={ticket.id}>
-                                    {ticket.name}: {" "} {quantity}
+                                    {ticket.name}: {" "} {quantity} @ {" "} {price}
                                 </li>))
                             }
                         </ul>
+                        <hr />
+                        <p>KES {recentOrder?.total_amount}</p>
                     </Alert>
                 )
             }
