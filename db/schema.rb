@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(version: 2023_05_25_233532) do
   create_table "events", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.date "start_date"
-    t.date "end_date"
+    t.datetime "start_date"
+    t.datetime "end_date"
     t.string "location"
     t.bigint "organizer_id"
     t.datetime "created_at", precision: 6, null: false
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2023_05_25_233532) do
     t.string "name"
     t.string "email"
     t.string "password_digest"
+    t.boolean "is_admin", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
