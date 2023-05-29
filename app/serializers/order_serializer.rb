@@ -1,5 +1,7 @@
 class OrderSerializer < ActiveModel::Serializer
-  attributes :id, :event_id, :user_id, :created_at
+  attributes :id, :created_at
 
-  has_many :order_items, serializer: OrderItemSerializer
+  belongs_to :event
+  belongs_to :user
+  has_many :order_items
 end

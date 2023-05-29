@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
     resources :events do
       resources :tickets, only: [:index, :create]
-      post '/orders', to: 'events#order_tickets'
+      resources :orders, only: [:index, :create]
     end
 
     resources :tickets, only: [:update, :destroy]
