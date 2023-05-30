@@ -1,32 +1,31 @@
 class OrdersController < ApplicationController
+  before_action :set_event
+
+  def index
+    render json: Order.where(event_id: @event.id).all
+  end
+
   def create
-    event = Event.find(params[:id])
-    user_id = order_params[:user_id]
-    tickets = order_params[:tickets]
+    @event.transaction do
+      order = @event.orders.create!(user_id: @current_user.id)
 
-    order = Order.new(event: event, user_id: user_id)
-    order_items = []
+      order_params[:tickets].each do |ticket|
+        ticket_instance = Ticket.find(ticket[:ticket_id])
+        order.order_items.create!(ticket_id: ticket[:ticket_id], quantity: ticket[:quantity], price: ticket_instance.price)
+      end
 
-    tickets.each do |ticket|
-      ticket_id = ticket[:ticket_id]
-      quantity = ticket[:quantity]
-
-      order_items << OrderItem.new(ticket_id: ticket_id, quantity: quantity)
-    end
-
-    order.order_items = order_items
-
-    if order.save
       render json: order, status: :created
-    else
-      render json: { errors: order.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   private
 
+  def set_event
+    @event = Event.find(params[:event_id])
+  end
+
   def order_params
-    params.permit(:user_id, tickets: [:ticket_id, :quantity])
+    params.permit(tickets: [:ticket_id, :quantity])
   end
 
 end
