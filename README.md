@@ -112,5 +112,5 @@ Integration with popular calendar applications for automatic event reminders.
 
 Events Hub offers an innovative and user-friendly solution for event management. By simplifying the event planning process and enhancing user satisfaction, Events Hub has the potential to revolutionize the industry. With the power of Rails and the flexibility of React, Events Hub provides a transformative event management experience.
 
-License
+## License
 Events Hub is open-source under the MIT License. 
