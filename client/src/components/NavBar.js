@@ -1,11 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { isAuthenticated } from "../utils";
-
 import UserDropDown from "./UserDropdown";
 import { Navbar as BsNavbar, Button, Container, Nav } from "react-bootstrap";
 
-const Navbar = () => {
+export default function NavBar() {
   return (
     <BsNavbar bg="dark" variant="dark" expand="sm">
       <Container>
@@ -48,4 +47,4 @@ const Navbar = () => {
       </Container>
     </BsNavbar>
   );
-};
+}

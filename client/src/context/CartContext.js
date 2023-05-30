@@ -9,9 +9,6 @@ export const CartProvider = ({ children }) => {
     cartItems: [],
     selectedEvents: [],
   };
-  // const [state, dispatch] = useReducer(cartReducer, {
-  //   cart: [],
-  // });
 
   const [cartState, cartDispatch] = useReducer(cartReducer, initialState);
   const [eventList, setEventList] = useLocalStorage("eventList", []);
@@ -19,11 +16,12 @@ export const CartProvider = ({ children }) => {
     "selectedEvents",
     []
   );
-
+  const [cartItems, setCartItems] = useState([]);
+  const [checkoutSuccess, setCheckoutSuccess] = useState(false);
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch("http://localhost:3000/events");
+        const response = await fetch("http://localhost:3000/api/events");
         const data = await response.json();
         setEventList(data);
         console.log("Fetched events:", data);
@@ -31,56 +29,41 @@ export const CartProvider = ({ children }) => {
         console.error("Failed to fetch events:", error);
       }
     };
-
     fetchEvents();
   }, [setEventList]);
 
-  // const addToCart = (eventItem) => {
-  //   const isItemInCart = selectedEvents.some(
-  //     (item) => item.id === eventItem.id
-  //   );
-  //   if (isItemInCart) {
-  //     console.log("Item is already in the cart:", eventItem);
-  //   } else {
-  //     setSelectedEvents([...selectedEvents, eventItem]);
-  //     setEventList(
-  //       eventList.filter((cardItem) => cardItem.eventId !== eventItem.eventId)
-  //     );
-  //     console.log("Item added to cart:", eventItem);
-  //     cartDispatch({
-  //       type: "SET_CART",
-  //       payload: updatedCart,
-  //       // payload: [...selectedEvents, eventItem],
-  //     });
-  //   }
-  // };
-
-  const addToCart = (eventItem) => {
+  const addToCart = async (eventItem) => {
     const isItemInCart = selectedEvents.some(
       (item) => item.id === eventItem.id
     );
     if (isItemInCart) {
       console.log("Item is already in the cart:", eventItem);
     } else {
-      const updatedCart = [...selectedEvents, eventItem];
-      setSelectedEvents(updatedCart);
-      setEventList(
-        eventList.filter((cardItem) => cardItem.eventId !== eventItem.eventId)
-      );
-      console.log("Item added to cart:", eventItem);
-      cartDispatch({
-        type: "SET_CART",
-        payload: updatedCart,
-      });
+      try {
+        const response = await fetch("http://localhost:3000/api/carts/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await response.json();
+        console.log("Item added to cart:", eventItem);
+
+        const updatedCart = [...selectedEvents, eventItem];
+        setSelectedEvents(updatedCart);
+        setEventList(
+          eventList.filter((cardItem) => cardItem.eventId !== eventItem.eventId)
+        );
+        console.log("Item added to cart:", eventItem);
+        cartDispatch({
+          type: "SET_CART",
+          payload: updatedCart,
+        });
+      } catch (err) {
+        console.log("Failed to add item to cart: ", err);
+      }
     }
   };
-
-  // const removeFromCart = (itemId) => {
-  //   cartDispatch((prevState) => ({
-  //     ...prevState,
-  //     cart: prevState.cart.filter((item) => item.id !== itemId),
-  //   }));
-  // };
 
   const removeFromCart = (itemId) => {
     cartDispatch({ type: "REMOVE_FROM_CART", payload: { id: itemId } });
@@ -93,12 +76,61 @@ export const CartProvider = ({ children }) => {
 
   const cartCount = selectedEvents.length;
 
+  const calculateTotalPrice = (items) => {
+    // Calculate the total price based on the items in the cart
+    const cartTotal = selectedEvents.reduce((total, item) => {
+      return total + item.price * item.quantity;
+    }, 0);
+    return cartTotal;
+  };
+
+  const handleCheckout = async (
+    cartItem,
+    cartItems,
+    calculateTotalPrice,
+    setCheckoutSuccess
+  ) => {
+    try {
+      await fetch("http://localhost:3000/carts/", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          // Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          id: cartItem.id, // Provide the cart ID
+          quantity: cartItems.length, // Provide the quantity based on the number of items in the cart
+          totalPrice: calculateTotalPrice(cartItems), // Provide the total price calculated based on the items in the cart
+        }),
+      });
+      clearCart();
+      setCheckoutSuccess(true); // Set the checkout success state to true
+    } catch (error) {
+      console.error("Error during checkout:", error);
+      // Handle the error or display an error message
+    }
+  };
+  useEffect(() => {
+    if (selectedEvents.length > 0) {
+      handleCheckout(
+        cartState,
+        cartItems,
+        calculateTotalPrice,
+        setCheckoutSuccess
+      );
+    }
+  }, [
+    selectedEvents,
+    cartState,
+    cartItems,
+    calculateTotalPrice,
+    setCheckoutSuccess,
+  ]);
+
   return (
     <>
       <CartContext.Provider
         value={{
-          // state,
-          // dispatch,
           eventList,
           cartState,
           cartDispatch,
@@ -107,6 +139,9 @@ export const CartProvider = ({ children }) => {
           removeFromCart,
           clearCart,
           cartCount,
+          handleCheckout,
+          checkoutSuccess,
+          setCheckoutSuccess,
         }}
       >
         {children}

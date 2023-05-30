@@ -8,11 +8,17 @@ import Form from "react-bootstrap/Form";
 import { AiFillDelete } from "react-icons/ai";
 import StarRating from "./StarRating";
 import { CartContext } from "../context/CartContext";
-import axios from "axios";
+// import axios from "axios";
 
 export default function Cart() {
-  const { cartState, cartDispatch, clearCart, removeFromCart, selectedEvents } =
-    useContext(CartContext);
+  const {
+    cartState,
+    cartDispatch,
+    clearCart,
+    removeFromCart,
+    selectedEvents,
+    handleCheckout,
+  } = useContext(CartContext);
   const cart = cartState.cartItems;
   const [total, setTotal] = useState(0);
   const [checkoutSuccess, setCheckoutSuccess] = useState(false);
@@ -31,22 +37,10 @@ export default function Cart() {
   const handleClearCart = () => {
     clearCart();
   };
-
-  // useEffect(() => {
-  //   const handleCheckout = async () => {
-  //     try {
-  //       await axios.post("http://localhost:3000/tickets", selectedEvents);
-  //       clearCart();
-  //       setCheckoutSuccess(true);
-  //     } catch (error) {
-  //       console.error("Error during checkout:", error);
-  //     }
-  //   };
-
-  //   if (selectedEvents.length > 0) {
-  //     handleCheckout();
-  //   }
-  // }, [selectedEvents]);
+  const handleCheckoutClick = () => {
+    // Call the handleCheckout function from the context
+    handleCheckout();
+  };
 
   return (
     <>
@@ -123,7 +117,7 @@ export default function Cart() {
           <Button
             type="button"
             disabled={cart.length === 0}
-            onClick={handleCheckout}
+            onClick={handleCheckoutClick}
           >
             Proceed to Checkout
           </Button>

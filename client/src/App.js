@@ -7,7 +7,6 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-
 import LandingPage from "./components/LandingPage";
 import LogIn from "./components/LogIn";
 import SignUp from "./components/SignUp";
@@ -29,6 +28,8 @@ import EditEvent, {
 import EventsGalleryPage, {
   loader as eventGalleryLoader,
 } from "./components/EventsGalleryPage";
+import { EventsPage } from "./components/EventsPage";
+import Cart from "./components/Cart";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -36,7 +37,8 @@ const router = createBrowserRouter(
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<LogIn />} />
       <Route path="/signup" element={<SignUp />} />
-
+      <Route path="/events" element={<EventsPage />} />
+      <Route path="/cart" element={<Cart />} />
       <Route
         path="/events"
         element={<EventsGalleryPage />}
@@ -74,12 +76,7 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  return (
-    <RouterProvider router={router}>
-      <Outlet />
-    </RouterProvider>
-  );
-  // return <RouterProvider router={router} />;
+  return <RouterProvider router={router} />;
 }
 
 export default App;

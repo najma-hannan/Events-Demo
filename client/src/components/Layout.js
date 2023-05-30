@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Navbar from "./NavBar";
 import Footer from "./Footer";
+import NavBar from "./NavBar";
 import { isAuthenticated, retrieveUser } from "../utils";
 
 export async function loader() {
@@ -16,7 +16,7 @@ export default function Layout() {
   return (
     <div className="d-flex flex-column" style={{ minHeight: "100vh" }}>
       <header>
-        <Navbar />
+        <NavBar />
       </header>
       <main className="flex-grow-1">
         <Outlet />

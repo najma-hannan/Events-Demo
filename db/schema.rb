@@ -10,16 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_25_233532) do
+ActiveRecord::Schema.define(version: 2023_05_29_130055) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "carts", force: :cascade do |t|
+    t.string "name"
+    t.string "url"
+    t.date "date"
+    t.string "location"
+    t.string "description"
+    t.integer "rating"
+    t.integer "price"
+    t.integer "quantity"
+    t.integer "total"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "events", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.datetime "start_date"
-    t.datetime "end_date"
+    t.date "start_date"
+    t.date "end_date"
     t.string "location"
     t.bigint "organizer_id"
     t.datetime "created_at", precision: 6, null: false

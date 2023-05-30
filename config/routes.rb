@@ -7,6 +7,12 @@ Rails.application.routes.draw do
       post '/orders', to: 'events#order_tickets'
     end
 
+    resources :carts, only: [:show, :create, :update, :destroy] do
+        post 'add_item/:item_id', action: :add_item, on: :member
+        delete 'remove_item/:item_id', action: :remove_item, on: :member
+        post 'checkout', on: :member
+     end  
+
     resources :tickets, only: [:update, :destroy]
 
     post '/login', to: 'sessions#create'
@@ -16,6 +22,8 @@ Rails.application.routes.draw do
     post '/signup', to: 'registrations#create'
     delete '/logout', to: 'application#logout'
   end
+
+
 
   # Routing logic: fallback requests for React Router.
   # Leave this here to help deploy your app later!
