@@ -7,7 +7,9 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-import LandingPage from "./components/LandingPage";
+import LandingPage, {
+  loader as landingPageLoader,
+} from "./components/LandingPage";
 import LogIn from "./components/LogIn";
 import SignUp from "./components/SignUp";
 import SingleEventPage, {
@@ -34,7 +36,7 @@ import Cart from "./components/Cart";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route id="root" element={<Layout />} loader={layoutLoader}>
-      <Route path="/" element={<LandingPage />} />
+      <Route path="/" element={<LandingPage />} loader={landingPageLoader} />
       <Route path="/login" element={<LogIn />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/events" element={<EventsPage />} />

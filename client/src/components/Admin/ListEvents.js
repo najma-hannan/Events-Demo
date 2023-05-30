@@ -58,6 +58,7 @@ export default function ListEvents() {
                             <td>Location</td>
                             <td>Start Date</td>
                             <td>End Date</td>
+                            <td>Tickets Purchased</td>
                             <td>Created At</td>
                             <td><span className="visually-hidden">Actions</span></td>
                         </tr>
@@ -71,6 +72,7 @@ export default function ListEvents() {
                                 <td>{event.location}</td>
                                 <td>{dateFormatter.format(new Date(event.start_date))}</td>
                                 <td>{dateFormatter.format(new Date(event.end_date))}</td>
+                                <td>{event.total_ordered_quantity}</td>
                                 <td>{dateFormatter.format(new Date(event.created_at))}</td>
                                 <td>
                                     <Button as={Link} size="sm" variant="link" to={`/admin/events/${event.id}/edit`}>Edit</Button>
