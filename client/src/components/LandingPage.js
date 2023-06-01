@@ -102,8 +102,8 @@ const LandingPage = () => {
                       <Card.Text>{event.description}</Card.Text>
                       <Card.Text>
                         <small className="text-muted">
-                          {" "}
-                          Organized by: {event.organizer.name}
+                          Organized by:
+                          {/* {event.organizer.name} */}
                         </small>
                       </Card.Text>
                     </Card.Body>
