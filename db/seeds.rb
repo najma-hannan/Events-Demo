@@ -19,3 +19,8 @@ event2 = Event.create(title: 'Event 2', description: 'sol fest concert', start_d
 event3 = Event.create(title: 'Event 3', description: 'blankets and wines', start_date: '2023-06-05', end_date: '2023-06-06', location: 'Location 2', organizer: admin)
 
 
+# Assigning Tickets to Users
+ticket1 = Ticket.create(event_name: 'Ticket 1', user: user1)
+ticket2 = Ticket.create(event_name: 'Ticket 2', user: user2)
+
+
