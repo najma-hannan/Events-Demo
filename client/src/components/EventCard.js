@@ -1,28 +1,49 @@
-import React from "react";
-import { useState } from 'react';
+import React, { useState } from 'react';
+import StarRating from './StarRating';
 
 const EventCard = ({ event }) => {
-  const { id, title, date, location, image } = event;
-  const [isBooked, setIsBooked] = useState(false);
+  const { id, title, date, location, image, rating } = event;
 
-  const handleBookEvent = () => {
-    // Perform booking logic here
-    // Example: Call the backend API to book the event
-    fetch(`/api/events/${id}/bookings`, {
+  const [isBooked, setIsBooked] = useState(false);
+  const [isRated, setIsRated] = useState(false);
+  const [updatedRating, setUpdatedRating] = useState(rating);
+
+  function handleBookEvent() {
+    fetch(`http://localhost:3000/events/${id}/book`, {
       method: 'POST',
-      // Additional headers or authentication tokens if required
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({}),
     })
-      .then(response => response.json())
-      .then(data => {
-        // Handle the response from the backend
+      .then((response) => response.json())
+      .then((data) => {
         setIsBooked(true);
-        console.log('Event booked!', data);
+        setIsRated(false);
       })
-      .catch(error => {
-        // Handle any errors that occurred during the booking process
+      .catch((error) => {
         console.error('Error booking event:', error);
       });
-  };
+  }
+
+  function handleUpdateRating(pct) {
+    const newRating = pct * 5;
+    fetch(`http://localhost:3000/events/${id}/rate`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ rating: newRating }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setUpdatedRating(data.rating);
+        setIsRated(true);
+      })
+      .catch((error) => {
+        console.error('Error updating rating:', error);
+      });
+  }
 
   return (
     <div className="event-card">
@@ -31,12 +52,23 @@ const EventCard = ({ event }) => {
         <h2>{title}</h2>
         <p>Date: {date}</p>
         <p>Location: {location}</p>
-        {isBooked ? (
-          <p>Event booked!</p>
-        ) : (
+        {isBooked && <p>Event booked!</p>}
+        {!isBooked && (
           <button className="btn-card" onClick={handleBookEvent}>
             Book Now
           </button>
+        )}
+        {isRated && (
+          <div>
+            <p>Event rated: {updatedRating}</p>
+            <StarRating rating={updatedRating} />
+          </div>
+        )}
+        {!isRated && (
+          <div>
+            <p>Rate this event:</p>
+            <StarRating handleUpdateRating={handleUpdateRating} />
+          </div>
         )}
       </div>
     </div>
@@ -44,4 +76,3 @@ const EventCard = ({ event }) => {
 };
 
 export default EventCard;
-

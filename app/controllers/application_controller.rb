@@ -1,4 +1,8 @@
 class ApplicationController < ActionController::API
+  rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity_response
+
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found_response
+
   before_action :authenticate_user
 
   def authenticate_user
@@ -29,6 +33,14 @@ class ApplicationController < ActionController::API
 
   def decode_token(token)
     JwtService.decode_token(token)
+  end
+
+  def unprocessable_entity_response(invalid)
+    render json: {errors: invalid.record.errors.to_hash(true)}, status: :unprocessable_entity
+  end
+
+  def not_found_response
+    render json: {errors: "Not Found"}, status: :not_found
   end
 
 end
