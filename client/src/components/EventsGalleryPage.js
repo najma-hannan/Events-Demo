@@ -27,11 +27,12 @@ export default function EventsGalleryPage() {
                             {events.map((event) => (
                                 <li key={event.id}>
                                     <Card>
-                                        <Card.Img variant="top" src="" />
+                                        <Card.Img variant="top" src={event.image_url}/>
                                         <Card.Body>
                                             <Card.Title>{event.title}</Card.Title>
                                             <Card.Text> <small className="text-muted"> Organized by: {event.organizer.name}</small></Card.Text>
                                             <Card.Text>{event.description}</Card.Text>
+                                            
                                         </Card.Body>
                                         <Card.Footer>
                                             <Button size="sm" variant="link" as={Link} to={`/events/${event.id}`}>View Event</Button>

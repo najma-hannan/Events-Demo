@@ -4,9 +4,7 @@ class FallbackController < ActionController::Base
 
   def index
     # React app index page
-    # render file: 'public/index.html'
     render file: 'public/index.html'
-    # render file: '/home/joyce/Development/code/phase4/Events-Hub/client/src/index.js'
-    # render template: 'devise/sessions/new'
+    # render file: Rails.root.join('app/views/devise/sessions/new.html.slim')
   end
 end

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import StarRating from './StarRating';
 
 const EventCard = ({ event }) => {
-  const { title, date, location,image_url, rating} = event;
+  const { title, date, location, image_url, rating} = event;
 
   const [updatedRating, setUpdatedRating] = useState(rating);
 
@@ -22,7 +22,8 @@ const EventCard = ({ event }) => {
 
   return (
     <div className="event-card">
-      <img src={image_url} alt={title} />
+       <img src={URL.createObjectURL(imageFile)} alt="Event" />
+      {/* <img src={image_url} alt={title} /> */}
       <div className="event-details">
         <h2>{title}</h2>
         <p>Date: {date}</p>

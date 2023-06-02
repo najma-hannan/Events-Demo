@@ -68,7 +68,7 @@ const LandingPage = () => {
                 {upcomingEvents.map(event => (
                   <li key={event.id}>
                     <Card>
-                      <Card.Img variant="top" src="" />
+                      <Card.Img variant="top" src={event.image_url} />
                       <Card.Body>
                         <Card.Title>{event.title}</Card.Title>
                         <Card.Text className="text-muted">
