@@ -8,8 +8,8 @@ Rails.application.routes.draw do
     end
 
     resources :carts, only: [:show, :create, :update, :destroy] do
-        post 'add_item/:item_id', action: :add_item, on: :member
-        delete 'remove_item/:item_id', action: :remove_item, on: :member
+        post 'add_item/:id', action: :add_item, on: :member
+        delete 'remove_item/:id', action: :remove_item, on: :member
         post 'checkout', on: :member
      end  
 

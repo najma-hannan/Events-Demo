@@ -16,6 +16,7 @@ export const CartProvider = ({ children }) => {
     "selectedEvents",
     []
   );
+  const [token, setToken] = useLocalStorage("token", "");
   const [cartItems, setCartItems] = useState([]);
   const [checkoutSuccess, setCheckoutSuccess] = useState(false);
   useEffect(() => {
@@ -36,29 +37,39 @@ export const CartProvider = ({ children }) => {
     const isItemInCart = selectedEvents.some(
       (item) => item.id === eventItem.id
     );
+
     if (isItemInCart) {
       console.log("Item is already in the cart:", eventItem);
     } else {
+      console.log("event  Item hapa", eventItem);
       try {
         const response = await fetch("http://localhost:3000/api/carts/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
+          body: JSON.stringify(eventItem),
         });
-        const data = await response.json();
-        console.log("Item added to cart:", eventItem);
 
-        const updatedCart = [...selectedEvents, eventItem];
-        setSelectedEvents(updatedCart);
-        setEventList(
-          eventList.filter((cardItem) => cardItem.eventId !== eventItem.eventId)
-        );
-        console.log("Item added to cart:", eventItem);
-        cartDispatch({
-          type: "SET_CART",
-          payload: updatedCart,
-        });
+        if (response.ok) {
+          const updatedCart = [...selectedEvents, eventItem];
+          setSelectedEvents(updatedCart);
+          console.log("Item added to cart:", eventItem);
+          setEventList((prevEventList) =>
+            prevEventList.filter(
+              (cardItem) => cardItem.eventId !== eventItem.eventId
+            )
+          );
+          cartDispatch({
+            type: "SET_CART",
+            payload: updatedCart,
+          });
+          const data = await response.json();
+          setToken(data.token);
+        } else {
+          throw new Error("Failed to add item to cart");
+        }
       } catch (err) {
         console.log("Failed to add item to cart: ", err);
       }
@@ -142,6 +153,8 @@ export const CartProvider = ({ children }) => {
           handleCheckout,
           checkoutSuccess,
           setCheckoutSuccess,
+          token,
+          setToken,
         }}
       >
         {children}

@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_secure_password
   attribute :is_admin, :boolean, default: false
 
+  has_one :cart
   has_many :events, foreign_key: 'organizer_id'
   has_many :orders
   has_many :order_items, through: :orders

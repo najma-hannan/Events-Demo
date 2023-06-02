@@ -7,9 +7,12 @@ class ApplicationController < ActionController::API
 
   def authenticate_user
     token = request.headers['Authorization']
+    message =  "vhchgcyhchchchchgchgc cghcghcchgc" + token
+    puts message
     if token
       begin
         @current_user = User.find(decode_token(token)['user_id'])
+        puts @current_user.inspect
       rescue JWT::DecodeError
         render json: { error: 'Invalid token' }, status: :unauthorized
       rescue ActiveRecord::RecordNotFound

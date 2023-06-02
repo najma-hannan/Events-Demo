@@ -2,6 +2,7 @@ class Event < ApplicationRecord
     belongs_to :organizer, class_name: 'User'
     has_many :tickets
     has_many :orders
+    has_many :carts, through: :order_items
 
     validates :title, presence: true, uniqueness: true
     validates :description, presence: true
