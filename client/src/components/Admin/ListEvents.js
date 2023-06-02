@@ -70,6 +70,7 @@ export default function ListEvents() {
                                 <td>{event.title}</td>
                                 <td>{event.description}</td>
                                 <td>{event.location}</td>
+                                <td>{event.image_url}</td>
                                 <td>{dateFormatter.format(new Date(event.start_date))}</td>
                                 <td>{dateFormatter.format(new Date(event.end_date))}</td>
                                 <td>{event.total_ordered_quantity}</td>

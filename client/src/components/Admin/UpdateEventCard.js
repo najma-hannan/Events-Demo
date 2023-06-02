@@ -91,6 +91,13 @@ export default function UpdateEventCard({ event }) {
                                 {errors?.end_date?.[0]}
                             </Form.Control.Feedback>
                         </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Image</Form.Label>
+                            <Form.Control name="image_url" type="image/*" autoComplete="off" isValid={!!errors?.image_url} defaultValue={event.image_url} required />
+                            <Form.Control.Feedback type="invalid">
+                                {errors?.image_url?.[0]}
+                            </Form.Control.Feedback>
+                        </Form.Group>
 
                         <div className="d-flex justify-content-end">
                             <Button type="submit">Update event</Button>

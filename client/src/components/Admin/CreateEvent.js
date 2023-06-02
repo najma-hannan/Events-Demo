@@ -9,11 +9,24 @@ export default function CreateEvent() {
     const navigate = useNavigate();
     const [errors, setErrors] = useState({});
     const [validated, setValidated] = useState(false);
+    const [imageFile, setImageFile] = useState(null);
+
+    function handleImageChange(e) {
+        setImageFile(e.target.files[0]);
+    }
+
 
     async function handleSubmit(e) {
         e.preventDefault();
 
-        const formData = new FormData(e.target);
+        // const formData = new FormData(e.target);
+        const formData = new FormData();
+    formData.append("title", e.target.title.value);
+    formData.append("description", e.target.description.value);
+    formData.append("location", e.target.location.value);
+    formData.append("start_date", e.target.start_date.value);
+    formData.append("end_date", e.target.end_date.value);
+    formData.append("image", imageFile);
 
         try {
             await axios.post("events", { event: Object.fromEntries(formData.entries()) });
@@ -82,6 +95,14 @@ export default function CreateEvent() {
                                     {errors?.end_date?.[0]}
                                 </Form.Control.Feedback>
                             </Form.Group>
+                            
+                            <Form.Group>
+                             <Form.Label>Image</Form.Label>
+                              <Form.Control type="file" accept="image/*" name="image_url" onChange={handleImageChange} isValid={!!errors?.image_url} required />
+                              <Form.Control.Feedback type="invalid">
+                                    {errors?.image_url?.[0]}
+                                </Form.Control.Feedback>
+                             </Form.Group>
 
                             <div className="d-flex justify-content-end">
                                 <Button type="submit">Create event</Button>
