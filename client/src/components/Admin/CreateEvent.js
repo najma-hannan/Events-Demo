@@ -82,6 +82,11 @@ export default function CreateEvent() {
                                     {errors?.end_date?.[0]}
                                 </Form.Control.Feedback>
                             </Form.Group>
+                            
+                            <Form.Group>
+                             <Form.Label>Image</Form.Label>
+                              <Form.Control type="text" name="image_url" isValid={!!errors?.image_url} required />
+                              </Form.Group>
 
                             <div className="d-flex justify-content-end">
                                 <Button type="submit">Create event</Button>
